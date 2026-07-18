@@ -1,0 +1,27 @@
+nav {
+  display: flex;
+  justify-content: center;
+
+  border-bottom: solid gray 0.1rem;
+  padding: 1rem;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+button {
+  justify-content: space-evenly;
+}
+
+img {
+  width: 4rem;
+  height: 4rem;
+}
