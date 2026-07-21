@@ -1,0 +1,44 @@
+* {
+  font-family: sans-serif;
+}
+
+.search-job-container {
+  display: block;
+  margin-top: 4rem;
+}
+
+p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-field-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  border: 0.15rem solid gray;
+  border-radius: 2rem;
+  align-items: center;
+  padding: 1rem;
+}
+
+button {
+  outline: 0.15rem solid gray;
+  border-radius: 2rem;
+  margin-left: 1rem;
+}
+
+button:hover,
+input:hover {
+  background-color: rgb(59, 59, 59);
+  cursor: pointer;
+}
+
+button:focus,
+input:focus {
+  outline: 0.25rem solid red;
+}
