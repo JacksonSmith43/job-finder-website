@@ -1,17 +1,18 @@
 <nav>
     <div class="nav-container">
-        <div class="icon">
-            <img src="assets/favicon.png">
+        <div class="icon-container">
+            <button class="icon-button" mat-icon-button>
+                <img id="icon" src="assets/favicon.png" alt="Website icon. Homepage button.">
+            </button>
         </div>
 
         <div class="control-buttons">
-            <button>Your Jobs</button>
-            <button>Resume</button>
-            <button>Job Alert</button>
+            <button matButton="filled" (click)="onYourJobs()" [routerLink]="'/yourJobs'" routerLinkActive="selected">Your Jobs</button>
+            <button matButton="filled" (click)="onResume()" [routerLink]="'/resume'" routerLinkActive="selected">Resume</button>
+            <button matButton="filled" (click)="onJobAlert()" [routerLink]="'/jobAlert'" routerLinkActive="selected">Job Alert</button>
 
-            <button>Sign Up</button>
-            <button>Login</button>
-            <button>Register</button>
+            <button matButton="filled" (click)="onRegister()" [routerLink]="'/register'" routerLinkActive="selected">Register</button>
+            <button matButton="filled" (click)="onLogin()" [routerLink]="'/login'" routerLinkActive="selected">Login</button>
         </div>
 
     </div>

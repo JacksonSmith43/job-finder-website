@@ -1,15 +1,33 @@
-nav {
-  display: flex;
-  justify-content: center;
-
-  border-bottom: solid gray 0.1rem;
-  padding: 1rem;
+* {
+  font-family: sans-serif;
 }
 
 .nav-container {
   display: flex;
+  justify-content: center;
   align-items: center;
+
+  border-bottom: 0.1rem solid gray;
+  padding: 1rem;
   gap: 1rem;
+}
+
+.icon-container {
+  margin-right: 2rem;
+}
+
+.icon-button {
+  padding: 0;
+  width: 4rem;
+  height: 4rem;
+}
+
+.icon-button img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border: 0.3rem solid transparent; /* Reserves space. */
+  box-sizing: border-box;
 }
 
 .control-buttons {
@@ -17,11 +35,16 @@ nav {
   gap: 1rem;
 }
 
-button {
-  justify-content: space-evenly;
+button:hover {
+  background-color: rgb(68, 71, 76);
+  border-radius: 1rem;
 }
 
-img {
-  width: 4rem;
-  height: 4rem;
+button:focus {
+  outline: 0.25rem solid red;
+  border-radius: 40rem;
+}
+
+.icon-button:focus {
+  border-radius: 10%; /* Makes it almost squared. */
 }
