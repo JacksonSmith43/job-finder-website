@@ -21,6 +21,7 @@ export class JobService implements OnInit {
         name: 'Angular Developer',
         techStack: ['Angular', 'Git', 'HTML', 'CSS'],
         company: 'Pretentious GmbH',
+        city: 'Berlin',
         isAvailable: true,
       },
       {
@@ -28,6 +29,15 @@ export class JobService implements OnInit {
         name: 'Java Developer',
         techStack: ['Java', 'Git', 'Spring Boot'],
         company: 'Too Much Money GmbH',
+        city: 'Vienna',
+        isAvailable: true,
+      },
+      {
+        id: 3,
+        name: 'Full-Stack Developer',
+        techStack: ['Angular', 'HTML', 'CSS', 'Java', 'Spring Boot', 'Git', 'Docker'],
+        company: 'More Money GmbH',
+        city: 'Vienna',
         isAvailable: true,
       },
     ];

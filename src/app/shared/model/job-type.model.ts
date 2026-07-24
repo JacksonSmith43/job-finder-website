@@ -3,5 +3,6 @@ export interface JobType {
   name: string;
   techStack: string[];
   company: string;
+  city: string;
   isAvailable: boolean;
 }
