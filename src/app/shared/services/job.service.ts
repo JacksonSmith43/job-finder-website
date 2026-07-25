@@ -6,7 +6,8 @@ import { JobType } from '../model/job-type.model';
   providedIn: 'root',
 })
 export class JobService implements OnInit {
-  jobs = signal<JobType[]>([]);
+  allJobs = signal<JobType[]>([]);
+  filteredJobs = signal<JobType[]>([]);
 
   ngOnInit(): void {
     console.log('JobService_ngOnInit().');
@@ -42,6 +43,6 @@ export class JobService implements OnInit {
       },
     ];
 
-    this.jobs.set(mockJobs);
+    this.allJobs.set(mockJobs);
   }
 }

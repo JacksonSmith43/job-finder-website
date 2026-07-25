@@ -1,18 +1,31 @@
 <div class="search-job-container">
     <p>{{jobsLength()}} positions have been advertised.</p>
 
-    <form class="form-field-container" (ngSubmit)="onSubmit(enteredInput)">
+    <form class="form-field-container" (ngSubmit)="onSubmit(enteredInput)" [formGroup]="form">
         <input type="text" placeholder="Tech Stack, Job, City" aria-label="Search field."
-            title="Enter a tech stack, like Angular, or location or a job title." #enteredInput>
+            title="Enter a tech stack, like Angular or location or a job title." formControlName="userInput" #enteredInput>
         <button type="submit" matButton="filled">Search</button>
     </form>
 
-    @if(isValid()){
-    <div class="job-result-output-container">
-        @for(job of jobs(); track job.id) {
-        <p>{{job.name}} at {{job.company}}</p>
+    <div class="output-container">
+        <div class="job-result-output-container">
+            @if(!(form.controls.userInput.dirty || form.controls.userInput.touched)){
+            @if(filteredJobs().length > 0){
+
+            @for(job of filteredJobs(); track job.id) {
+            <p>{{job.name}} at {{job.company}}</p>
+            }
+
+            }@else {
+            <p class="error-message">No results found.</p>
+            }
+            }
+        </div>
+
+
+        @if(form.controls.userInput.invalid && (form.controls.userInput.dirty || form.controls.userInput.touched)){
+        <p class="error-message">{{inputIsValid}}</p>
         }
     </div>
 
-    }
 </div>
