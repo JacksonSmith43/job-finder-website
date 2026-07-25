@@ -7,10 +7,9 @@
   margin-top: 4rem;
 }
 
-p {
+.positions-number {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .form-field-container {
@@ -19,9 +18,48 @@ p {
   align-items: center;
 }
 
+.output-container {
+  margin-top: 2rem;
+}
+
+.job-result-output-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.job-result-output {
+  outline: 0.25rem solid blue;
+  border-radius: 2rem;
+
+  width: 60%;
+  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+}
+
+.job-details {
+  display: block;
+
+  outline: 0.25rem solid gray;
+  border-radius: 2rem;
+
+  align-items: center;
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+.company-logo,
+.tech-stack-logo {
+  width: 10%;
+  height: 10%;
+}
+
 .error-message {
   color: red;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .job-result-output-container p:first-child {
@@ -29,10 +67,13 @@ p {
 }
 
 input {
+  font-size: large;
   border: 0.15rem solid gray;
   border-radius: 2rem;
+
   align-items: center;
   padding: 1rem;
+  width: 40%;
 }
 
 button {
