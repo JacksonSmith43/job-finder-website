@@ -16,12 +16,21 @@
                 @for(job of filteredJobs(); track job.id) {
                 <div class="job-details">
                     <h2>{{job.name}}</h2>
-                    <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo'>
-                    <h2>[TODO: Icon] {{job.company}}</h2>
+                    <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo' [alt]="job.company + ' logo.'">
+                    <h2>{{job.company}}</h2>
                     <p>{{job.description}}</p>
                     <p>{{job.positionLevel}}</p>
-                    <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + job.techStackLogo[0]'>
-                    <h3>[TODO: Icon] {{job.techStack}}</h3>
+
+                    <div class="tech-stack-list">
+                        @for(tech of job.techStack; track tech){
+                        <div class="tech-item">
+                            <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)'
+                                [alt]="job.techStack + ' logo.'">
+                            <span>{{tech}}</span>
+                        </div>
+                        }
+                    </div>
+
                 </div>
 
                 }

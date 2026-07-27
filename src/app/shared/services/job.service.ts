@@ -27,7 +27,6 @@ export class JobService implements OnInit {
         city: 'Berlin',
         positionLevel: 'Junior',
         companyLogo: 'bug-busters.png',
-        techStackLogo: ['angular.png', 'git.png', 'html.png', 'css.png'],
         isAvailable: true,
       },
       {
@@ -40,7 +39,6 @@ export class JobService implements OnInit {
         city: 'Vienna',
         positionLevel: 'Junior',
         companyLogo: 'infinite-loopers.png',
-        techStackLogo: ['java.png', 'git.png', 'spring-boot.png'],
         isAvailable: true,
       },
       {
@@ -53,15 +51,6 @@ export class JobService implements OnInit {
         city: 'Vienna',
         positionLevel: 'Senior',
         companyLogo: 'null-pointer-ninjas.png',
-        techStackLogo: [
-          'angular.png',
-          'html.png',
-          'css.png',
-          'java.png',
-          'spring-boot.png',
-          'git.png',
-          'docker.png',
-        ],
         isAvailable: true,
       },
       {
@@ -74,7 +63,6 @@ export class JobService implements OnInit {
         city: 'Tokyo',
         positionLevel: 'Mid-Level',
         companyLogo: 'syntax-tacos.png',
-        techStackLogo: ['.png'],
         isAvailable: true,
       },
 
@@ -86,7 +74,7 @@ export class JobService implements OnInit {
           'Embedded C',
           'STM32',
           'Confluence',
-          'JIRA',
+          'Jira',
           'C',
           'Python',
           'SPI',
@@ -99,7 +87,6 @@ export class JobService implements OnInit {
         city: 'Vienna',
         positionLevel: 'Mid-Level',
         companyLogo: 'cache-me-outside-software.png',
-        techStackLogo: ['c.png', 'python.png'],
         isAvailable: true,
       },
     ];

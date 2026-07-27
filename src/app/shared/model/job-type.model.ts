@@ -7,7 +7,6 @@ export interface JobType {
   city: string;
   positionLevel: PositionLevel;
   companyLogo: string;
-  techStackLogo: string[];
   isAvailable: boolean;
 }
 
