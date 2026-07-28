@@ -34,7 +34,7 @@
 
                     <div class="tech-stack-list">
                         @for(tech of job.techStack; track tech){
-                        <div class="tech-item">
+                        <div class="tech-item" (click)="onFilterTechStack(tech)">
                             <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)'
                                 [alt]="job.techStack + ' logo.'">
                             <span>{{tech}}</span>

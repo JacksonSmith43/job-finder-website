@@ -110,6 +110,20 @@ export class SearchJobComponent implements OnInit {
     ];
   }
 
+  onFilterTechStack(tech: string) {
+    console.log('onFilterTechStack().');
+    console.log('onFilterTechStack()_tech: ', tech);
+    console.log('onFilterTechStack()_this.allJobs(): ', this.allJobs());
+
+    let filteredTechStackList: boolean[] = this.allJobs().map((job) =>
+      job.techStack.includes(tech),
+    );
+    console.log('onFilterTechStack()_filteredTechStackList: ', filteredTechStackList);
+
+    this.filteredJobs.set(this.allJobs().filter((job, index) => filteredTechStackList[index]));
+    console.log('onFilterTechStack()_this.filteredJobs(): ', this.filteredJobs());
+  }
+
   get inputIsValid() {
     if (this.form.controls.userInput.hasError('required')) {
       return 'An input is required.';
