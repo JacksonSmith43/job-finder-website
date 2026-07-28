@@ -26,7 +26,7 @@
 
                     <div class="job-info-list">
                         @for(info of getJobInfoItems(job); track info.label){
-                        <div class="job-info-chip">
+                        <div class="job-info-chip" (click)="onFilterJobInfo(info)" (keypress)="onFilterJobInfo(info)" tabindex="0">
                             <span>{{info.value}}</span>
                         </div>
                         }
@@ -34,7 +34,7 @@
 
                     <div class="tech-stack-list">
                         @for(tech of job.techStack; track tech){
-                        <div class="tech-item" (click)="onFilterTechStack(tech)">
+                        <div class="tech-item" (click)="onFilterTechStack(tech)" (keypress)="onFilterTechStack(tech)" tabindex="0">
                             <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)'
                                 [alt]="job.techStack + ' logo.'">
                             <span>{{tech}}</span>
@@ -53,5 +53,5 @@
             }
         </div>
     </div>
-    
+
 </div>

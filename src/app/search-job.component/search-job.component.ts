@@ -124,6 +124,24 @@ export class SearchJobComponent implements OnInit {
     console.log('onFilterTechStack()_this.filteredJobs(): ', this.filteredJobs());
   }
 
+  onFilterJobInfo(info: JobInfoItem) {
+    console.log('onFilterJobInfo().');
+    console.log('onFilterJobInfo()_info: ', info);
+
+    let filteredJobInfo: boolean[] = this.allJobs().map(
+      (job) =>
+        job.city.includes(info.value) ||
+        job.employmentType.includes(info.value) ||
+        job.positionLevel.includes(info.value) ||
+        job.salary.includes(info.value) ||
+        job.workMode.includes(info.value),
+    );
+    console.log('onFilterJobInfo()_filteredJobInfo: ', filteredJobInfo);
+
+    this.filteredJobs.set(this.allJobs().filter((job, index) => filteredJobInfo[index]));
+    console.log('onFilterJobInfo()_this.filteredJobs(): ', this.filteredJobs());
+  }
+
   get inputIsValid() {
     if (this.form.controls.userInput.hasError('required')) {
       return 'An input is required.';
