@@ -8,8 +8,12 @@
     </form>
 
     <div class="output-container">
+
+        @if(form.controls.userInput.invalid && (form.controls.userInput.dirty || form.controls.userInput.touched)){
+        <p class="error-message">{{inputIsValid}}</p>
+        }
         <div class="job-result-output-container">
-            @if(!(form.controls.userInput.dirty || form.controls.userInput.touched)){
+            @if(!(form.controls.userInput.dirty || form.controls.userInput.touched) || isVisible()){
             @if(filteredJobs().length > 0){
 
             <div class="job-result-output">
@@ -19,7 +23,14 @@
                     <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo' [alt]="job.company + ' logo.'">
                     <h2>{{job.company}}</h2>
                     <p>{{job.description}}</p>
-                    <p>{{job.positionLevel}}</p>
+
+                    <div class="job-info-list">
+                        @for(info of getJobInfoItems(job); track info.label){
+                        <div class="job-info-chip">
+                            <span>{{info.value}}</span>
+                        </div>
+                        }
+                    </div>
 
                     <div class="tech-stack-list">
                         @for(tech of job.techStack; track tech){
@@ -41,11 +52,6 @@
             }
             }
         </div>
-
-
-        @if(form.controls.userInput.invalid && (form.controls.userInput.dirty || form.controls.userInput.touched)){
-        <p class="error-message">{{inputIsValid}}</p>
-        }
     </div>
-
+    
 </div>

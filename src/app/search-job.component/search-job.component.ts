@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 
 import { JobService } from '../shared/services/job.service';
+import { JobInfoItem, JobType } from '../shared/model/job-type.model';
 
 @Component({
   selector: 'app-search-job.component',
@@ -20,6 +21,8 @@ import { JobService } from '../shared/services/job.service';
 })
 export class SearchJobComponent implements OnInit {
   jobService = inject(JobService);
+
+  isVisible = signal<boolean>(false);
 
   allJobs = this.jobService.allJobs;
   filteredJobs = this.jobService.filteredJobs;
@@ -64,14 +67,13 @@ export class SearchJobComponent implements OnInit {
   ngOnInit(): void {
     console.log('SearchJobComponent_ngOnInit().');
     this.jobService.loadJobs();
-    this.filteredJobs.set(this.allJobs());
-    console.log('SearchJobComponent_ngOnInit()_filteredJobs: ', this.filteredJobs());
   }
 
   onSubmit(enteredInput: HTMLInputElement): void {
     console.log('SearchJobComponent_onSubmit().');
 
     if (!this.form.controls.userInput.valid) {
+      this.isVisible.set(false);
       return;
     }
 
@@ -90,11 +92,22 @@ export class SearchJobComponent implements OnInit {
     this.filteredJobs.set(filteredInput);
     console.log('SearchJobComponent_onSubmit()_filteredInput: ', filteredInput);
 
+    this.isVisible.set(true);
     this.form.reset();
   }
 
   getTechLogo(tech: string): string {
     return this.techStack[tech] ?? 'default-tech.png';
+  }
+
+  getJobInfoItems(job: JobType): JobInfoItem[] {
+    return [
+      { label: 'Level', value: job.positionLevel },
+      { label: 'City', value: job.city },
+      { label: 'Salary', value: job.salary },
+      { label: 'Employment Type', value: job.employmentType },
+      { label: 'Work Mode', value: job.workMode },
+    ];
   }
 
   get inputIsValid() {
