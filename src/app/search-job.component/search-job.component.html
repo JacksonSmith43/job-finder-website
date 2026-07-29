@@ -1,18 +1,57 @@
 <div class="search-job-container">
-    <p>{{jobsLength()}} positions have been advertised.</p>
+    <p class="positions-number sr-only" role="status" aria-live="polite" aria-atomic="true">{{searchAnnouncement()}}
+    </p>
 
-    <form class="form-field-container" (ngSubmit)="onSubmit(enteredInput)">
-        <input type="text" placeholder="Tech Stack, Job, City" aria-label="Search field."
-            title="Enter a tech stack, like Angular, or location or a job title." #enteredInput>
+    <form class="form-field-container" (ngSubmit)="onSubmit(enteredInput)" [formGroup]="form">
+        <input type="text" placeholder="Tech Stack, Job, City" aria-label="Search field." aria-describedby="error-message"
+            title="Enter a tech stack, like Angular, location or a job title." formControlName="userInput" #enteredInput>
         <button type="submit" matButton="filled">Search</button>
     </form>
 
-    @if(isValid()){
-    <div class="job-result-output-container">
-        @for(job of jobs(); track job.id) {
-        <p>{{job.name}} at {{job.company}}</p>
+    <div class="output-container">
+
+        @if(form.controls.userInput.invalid && (form.controls.userInput.dirty || form.controls.userInput.touched)){
+        <p id="error-message" class="error-message">{{inputIsValid}}</p>
         }
+        <div class="job-result-output-container">
+            @if(!(form.controls.userInput.dirty || form.controls.userInput.touched) || isVisible()){
+            @if(filteredJobs().length > 0){
+
+            <div class="job-result-output">
+                @for(job of filteredJobs(); track job.id) {
+                <div class="job-details" [attr.aria-labelledby]="'job-title-' + job.id" tabindex="0">
+                    <h2 [id]="'job-title-' + job.id">{{job.name}}</h2>
+                    <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo' [alt]="job.company + ' logo.'">
+                    <h2>{{job.company}}</h2>
+                    <p>{{job.description}}</p>
+
+                    <div class="job-info-list">
+                        @for(info of getJobInfoItems(job); track info.label){
+                        <button class="job-info-chip" type="button" (click)="onFilterJobInfo(info)">
+                            <span>{{info.value}}</span>
+                        </button>
+                        }
+                    </div>
+
+                    <div class="tech-stack-list">
+                        @for(tech of job.techStack; track tech){
+                        <button class="tech-item" type="button" (click)="onFilterTechStack(tech)">
+                            <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
+                            <span>{{tech}}</span>
+                        </button>
+                        }
+                    </div>
+
+                </div>
+
+                }
+            </div>
+
+            }@else {
+            <p class="error-message">No results found.</p>
+            }
+            }
+        </div>
     </div>
 
-    }
 </div>

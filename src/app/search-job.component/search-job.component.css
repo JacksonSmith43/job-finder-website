@@ -7,13 +7,93 @@
   margin-top: 4rem;
 }
 
-p {
+.positions-number {
+  display: flex;
+  justify-content: center;
+}
+
+.form-field-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.form-field-container {
+.output-container {
+  margin-top: 2rem;
+}
+
+.job-result-output-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.job-result-output {
+  outline: 0.25rem solid blue;
+  border-radius: 2rem;
+
+  width: 60%;
+  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+}
+
+.job-details {
+  display: block;
+
+  align-items: center;
+  outline: 0.025rem solid gray;
+  border-radius: 2rem;
+
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+.job-info-chip {
+  outline: 0.025rem solid gray;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: unset;
+
+  padding: 1rem 1rem;
+  margin: 1rem 1rem 0rem 0rem;
+}
+
+.company-logo {
+  width: 10%;
+  height: 10%;
+}
+
+.tech-stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tech-item {
+  display: inline-flex;
+  align-items: center;
+  outline: 0.025rem solid gray;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: unset;
+
+  padding: 0.5rem 0.5rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  margin-left: 0rem;
+}
+
+.tech-stack-logo {
+  width: 1.5rem;
+  height: 1.5rem;
+
+  padding-left: 0.005rem;
+  margin-right: 0.5rem;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,10 +104,13 @@ p {
 }
 
 input {
+  font-size: large;
   border: 0.15rem solid gray;
   border-radius: 2rem;
+
   align-items: center;
   padding: 1rem;
+  width: 40%;
 }
 
 button {
@@ -37,12 +120,19 @@ button {
 }
 
 button:hover,
-input:hover {
+input:hover,
+.job-details:hover {
   background-color: rgb(59, 59, 59);
   cursor: pointer;
 }
 
+.job-info-chip:hover,
+.tech-item:hover {
+  background-color: rgb(126, 104, 104);
+}
+
 button:focus,
-input:focus {
+input:focus,
+.job-details:focus {
   outline: 0.25rem solid red;
 }
