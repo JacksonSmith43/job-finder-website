@@ -48,21 +48,14 @@
   padding: 2rem;
 }
 
-.job-info-list {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .job-info-chip {
   outline: 0.025rem solid gray;
   border-radius: 0.5rem;
+  border: none;
+  background-color: unset;
 
   padding: 1rem 1rem;
-  margin-left: 1rem;
-}
-
-.job-info-chip:first-child {
-  margin-left: 0rem;
+  margin: 1rem 1rem 0rem 0rem;
 }
 
 .company-logo {
@@ -73,7 +66,6 @@
 .tech-stack-list {
   display: flex;
   flex-wrap: wrap;
-
   align-items: center;
 }
 
@@ -82,10 +74,13 @@
   align-items: center;
   outline: 0.025rem solid gray;
   border-radius: 0.5rem;
+  border: none;
+  background-color: unset;
 
   padding: 0.5rem 0.5rem;
   margin-right: 1rem;
   margin-top: 1rem;
+  margin-left: 0rem;
 }
 
 .tech-stack-logo {
@@ -126,15 +121,18 @@ button {
 
 button:hover,
 input:hover,
-.job-info-chip:hover,
-.tech-item:hover {
+.job-details:hover {
   background-color: rgb(59, 59, 59);
   cursor: pointer;
 }
 
+.job-info-chip:hover,
+.tech-item:hover {
+  background-color: rgb(126, 104, 104);
+}
+
 button:focus,
 input:focus,
-.job-info-chip:focus,
-.tech-item:focus {
+.job-details:focus {
   outline: 0.25rem solid red;
 }

@@ -23,6 +23,7 @@ export class SearchJobComponent implements OnInit {
   jobService = inject(JobService);
 
   isVisible = signal<boolean>(false);
+  searchAnnouncement = signal<string>('');
 
   allJobs = this.jobService.allJobs;
   filteredJobs = this.jobService.filteredJobs;
@@ -91,6 +92,14 @@ export class SearchJobComponent implements OnInit {
     );
     this.filteredJobs.set(filteredInput);
     console.log('SearchJobComponent_onSubmit()_filteredInput: ', filteredInput);
+
+    if (filteredInput.length === 0) {
+      this.searchAnnouncement.set('No positions found.');
+    } else if (filteredInput.length === 1) {
+      this.searchAnnouncement.set('1 position found.');
+    } else {
+      this.searchAnnouncement.set(`${filteredInput.length} positions found.`);
+    }
 
     this.isVisible.set(true);
     this.form.reset();
