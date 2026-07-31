@@ -1,7 +1,7 @@
 <nav>
     <div class="nav-container">
         <div class="icon-container">
-            <button class="icon-button" mat-icon-button (click)="onHomepage()">
+            <button class="icon-button" mat-icon-button (click)="onHomepage()" [routerLink]="'/homepage'" routerLinkActive="selected">
                 <img id="icon" src="assets/favicon.png" alt="Website icon. Homepage button.">
             </button>
         </div>
