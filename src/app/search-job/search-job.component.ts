@@ -65,6 +65,8 @@ export class SearchJobComponent implements OnInit {
   ngOnInit(): void {
     console.log('SearchJobComponent_ngOnInit().');
     this.jobService.loadJobs();
+    this.jobService.determinesAvailableJobLength(this.allJobs(), '');
+    this.isVisible.set(true);
   }
 
   onSubmit(enteredInput: HTMLInputElement): void {
@@ -90,13 +92,7 @@ export class SearchJobComponent implements OnInit {
     this.filteredJobs.set(filteredInput);
     console.log('SearchJobComponent_onSubmit()_filteredInput: ', filteredInput);
 
-    if (filteredInput.length === 0) {
-      this.searchAnnouncement.set('No positions found.');
-    } else if (filteredInput.length === 1) {
-      this.searchAnnouncement.set('1 position found.');
-    } else {
-      this.searchAnnouncement.set(`${filteredInput.length} positions found.`);
-    }
+    this.jobService.determinesAvailableJobLength(filteredInput, userInput);
 
     this.isVisible.set(true);
     this.form.reset();

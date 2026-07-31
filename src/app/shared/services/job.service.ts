@@ -111,4 +111,23 @@ export class JobService implements OnInit {
     this.allJobs.set(mockJobs);
     this.filteredJobs.set(mockJobs);
   }
+
+  determinesAvailableJobLength(filteredInput: JobType[], enteredInput: string): void {
+    console.log('JobService_determinesAvailableJobLength().');
+
+    if (filteredInput.length === 0) {
+      this.searchAnnouncement.set(`0 positions found matching "${enteredInput}"`);
+    } else if (filteredInput.length === 1) {
+      this.searchAnnouncement.set(`1 position found matching "${enteredInput}"`);
+    } else {
+      // enteredInput is empty when the page has been reloaded.
+      if (enteredInput === '') {
+        this.searchAnnouncement.set(`${filteredInput.length} positions found`);
+      } else {
+        this.searchAnnouncement.set(
+          `${filteredInput.length} positions found matching "${enteredInput}"`,
+        );
+      }
+    }
+  }
 }

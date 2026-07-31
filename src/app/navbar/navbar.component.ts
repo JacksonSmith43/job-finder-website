@@ -15,7 +15,8 @@ export class Navbar {
 
   onHomepage(): void {
     console.log('Navbar_onHomepage().');
-    window.location.reload(); // Reloads the page.
+    this.jobService.loadJobs();
+    this.jobService.determinesAvailableJobLength(this.jobService.allJobs(), '');
   }
 
   onYourJobs() {
