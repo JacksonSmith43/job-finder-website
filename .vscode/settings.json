@@ -1,0 +1,4 @@
+{
+  "vitest.ignoreWorkspace": true,
+  "vitest.watchOnStartup": false
+}
