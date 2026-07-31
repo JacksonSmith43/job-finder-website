@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
+import { JobService } from '../shared/services/job.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,6 +11,13 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
   styleUrl: './navbar.component.css',
 })
 export class Navbar {
+  jobService = inject(JobService);
+
+  onHomepage(): void {
+    console.log('Navbar_onHomepage().');
+    window.location.reload(); // Reloads the page.
+  }
+
   onYourJobs() {
     console.log('Navbar_onYourJobs().');
   }

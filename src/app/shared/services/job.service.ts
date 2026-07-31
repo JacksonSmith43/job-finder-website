@@ -8,6 +8,8 @@ import { JobType } from '../model/job-type.model';
 export class JobService implements OnInit {
   allJobs = signal<JobType[]>([]);
   filteredJobs = signal<JobType[]>([]);
+  isVisible = signal<boolean>(false);
+  searchAnnouncement = signal<string>('');
 
   ngOnInit(): void {
     console.log('JobService_ngOnInit().');

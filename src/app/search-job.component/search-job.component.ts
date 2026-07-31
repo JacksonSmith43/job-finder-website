@@ -22,11 +22,10 @@ import { JobInfoItem, JobType } from '../shared/model/job-type.model';
 export class SearchJobComponent implements OnInit {
   jobService = inject(JobService);
 
-  isVisible = signal<boolean>(false);
-  searchAnnouncement = signal<string>('');
-
   allJobs = this.jobService.allJobs;
   filteredJobs = this.jobService.filteredJobs;
+  isVisible = this.jobService.isVisible;
+  searchAnnouncement = this.jobService.searchAnnouncement;
 
   form = new FormGroup({
     userInput: new FormControl('', [
