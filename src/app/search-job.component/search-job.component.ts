@@ -28,8 +28,6 @@ export class SearchJobComponent implements OnInit {
   allJobs = this.jobService.allJobs;
   filteredJobs = this.jobService.filteredJobs;
 
-  jobsLength = computed(() => this.filteredJobs().length);
-
   form = new FormGroup({
     userInput: new FormControl('', [
       Validators.required,
@@ -152,6 +150,8 @@ export class SearchJobComponent implements OnInit {
   }
 
   get inputIsValid() {
+    console.log('inputIsValid().');
+
     if (this.form.controls.userInput.hasError('required')) {
       return 'An input is required.';
     } else if (this.form.controls.userInput.hasError('minlength')) {
