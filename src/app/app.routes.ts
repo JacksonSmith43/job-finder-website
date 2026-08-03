@@ -6,6 +6,7 @@ import { JobAlertComponent } from './job-alert/job-alert.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { YourJobsComponent } from './your-jobs/your-jobs.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
 
 export const routes: Routes = [
   { path: '', component: SearchJobComponent },
@@ -15,4 +16,7 @@ export const routes: Routes = [
   { path: 'jobAlert', component: JobAlertComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+
+  { path: 'jobDetails/:id', component: JobDetailsComponent },
+  { path: 'homepage/jobDetails/:id', component: JobDetailsComponent },
 ];

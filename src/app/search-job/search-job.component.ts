@@ -12,10 +12,18 @@ import {
 
 import { JobService } from '../shared/services/job.service';
 import { JobInfoItem, JobType } from '../shared/model/job-type.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-search-job.component',
-  imports: [MatFormFieldModule, MatInputModule, MatAnchor, FormsModule, ReactiveFormsModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatAnchor,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
   templateUrl: './search-job.component.html',
   styleUrl: './search-job.component.css',
 })
