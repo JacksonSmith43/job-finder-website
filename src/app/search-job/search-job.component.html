@@ -19,7 +19,8 @@
 
             <div class="job-result-output">
                 @for(job of filteredJobs(); track job.id) {
-                <div class="job-details" [routerLink]="['jobDetails', job.id]" [attr.aria-labelledby]="'job-title-' + job.id" tabindex="0">
+                <div class="job-details" (click)="onSelectedJob(job)" [routerLink]="['jobDetails', job.id]"
+                    [attr.aria-labelledby]="'job-title-' + job.id" tabindex="0">
                     <h2 [id]="'job-title-' + job.id">{{job.name}}</h2>
                     <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo' [alt]="job.company + ' logo.'">
                     <h2>{{job.company}}</h2>

@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAnchor } from '@angular/material/button';
@@ -9,10 +9,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { JobService } from '../shared/services/job.service';
 import { JobInfoItem, JobType } from '../shared/model/job-type.model';
-import { RouterLink } from '@angular/router';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-search-job.component',
@@ -29,6 +30,7 @@ import { RouterLink } from '@angular/router';
 })
 export class SearchJobComponent implements OnInit {
   jobService = inject(JobService);
+  localStorageService = inject(LocalStorageService);
 
   allJobs = this.jobService.allJobs;
   filteredJobs = this.jobService.filteredJobs;
@@ -150,6 +152,11 @@ export class SearchJobComponent implements OnInit {
 
     this.filteredJobs.set(this.allJobs().filter((job, index) => filteredJobInfo[index]));
     console.log('onFilterJobInfo()_this.filteredJobs(): ', this.filteredJobs());
+  }
+
+  onSelectedJob(job: JobType) {
+    console.log('onSelectedJob().');
+    this.localStorageService.saveToLocalStorage(job, 'selectedJob');
   }
 
   get inputIsValid() {
