@@ -56,9 +56,14 @@
 
         <section class="job-tech-stack">
             <h2>Tech Stack</h2>
-            @for(tech of currentJob()?.techStack; track $index){
-            <p>{{tech}}</p>
-            }
+            <div class="tech-stack-name-logo">
+                @for(tech of currentJob()?.techStack; track $index){
+                <button>
+                    <img [src]='"../../assets/tech-stack/" + getTechLogo(tech)'>
+                    <span>{{tech}}</span>
+                </button>
+                }
+            </div>
         </section>
 
         <section class="your-role">

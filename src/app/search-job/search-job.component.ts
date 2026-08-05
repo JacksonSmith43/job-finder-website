@@ -45,32 +45,7 @@ export class SearchJobComponent implements OnInit {
     ]),
   });
 
-  readonly techStack: Record<string, string> = {
-    Angular: 'angular.png',
-    C: 'c.png',
-    'C++': 'c++.png',
-    CSS: 'css.png',
-    Docker: 'docker.png',
-    Git: 'git.png',
-    HTML: 'html.png',
-    Java: 'java.png',
-    JavaScript: 'js.png',
-    Python: 'python.png',
-    React: 'react.png',
-    'Spring Boot': 'spring-boot.png',
-    Adobe: 'adobe.png',
-    Atlassian: 'atlassian.png',
-    Claude: 'claude.png',
-    Confluence: 'confluence.png',
-    'Embedded C': 'embedded-c.png',
-    Figma: 'figma.png',
-    I2C: 'i2c.png',
-    Jira: 'jira.png',
-    SPI: 'spi.png',
-    STM32: 'stm32.png',
-    UART: 'uart.png',
-    Zephyr: 'zephyr.png',
-  };
+
 
   ngOnInit(): void {
     console.log('SearchJobComponent_ngOnInit().');
@@ -109,7 +84,7 @@ export class SearchJobComponent implements OnInit {
   }
 
   getTechLogo(tech: string): string {
-    return this.techStack[tech] ?? 'default-tech.png';
+    return this.jobService.techStack[tech] ?? 'default-tech.png';
   }
 
   getJobInfoItems(job: JobType): JobInfoItem[] {

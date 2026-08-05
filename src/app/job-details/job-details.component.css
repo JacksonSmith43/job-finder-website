@@ -21,6 +21,12 @@ li {
   list-style: none;
 }
 
+button {
+  background-color: unset;
+  border-color: unset;
+  border-style: none;
+}
+
 .position-company-name-image {
   display: flex;
   align-items: center;
@@ -65,15 +71,30 @@ li {
   background-color: rgb(56, 55, 55);
 }
 
-.job-tech-stack p {
-  display: inline-flex;
+.job-tech-stack {
+  margin-right: 1rem;
+}
+
+.job-tech-stack button img {
+  width: 2rem;
+  margin-left: 1rem;
+}
+
+.tech-stack-name-logo {
+  display: flex;
+  align-items: center;
+}
+
+.tech-stack-name-logo button {
+  display: flex;
+  align-items: center;
   margin-right: 1rem;
 }
 
 .job-info-item,
 .job-summary,
 .job-tech-stack,
-.job-tech-stack p,
+.tech-stack-name-logo button,
 .your-role,
 .our-expectations,
 .our-offer,

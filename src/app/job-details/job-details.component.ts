@@ -74,4 +74,8 @@ export class JobDetailsComponent implements OnInit {
       }
     });
   }
+
+  getTechLogo(tech: string): string {
+    return this.jobService.techStack[tech] ?? 'default-tech.png';
+  }
 }
