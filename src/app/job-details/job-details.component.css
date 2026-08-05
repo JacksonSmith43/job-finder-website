@@ -1,3 +1,109 @@
 * {
   font-family: sans-serif;
 }
+
+header {
+  margin-top: 1rem;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+}
+
+img {
+  width: 10%;
+  height: 8%;
+  margin-right: 1rem;
+}
+
+li {
+  list-style: none;
+}
+
+.position-company-name-image {
+  display: flex;
+  align-items: center;
+}
+
+.position-company-name {
+  display: grid;
+  margin-top: 0rem;
+}
+
+.position {
+  margin-bottom: 0rem;
+}
+
+.company {
+  margin-top: 0rem;
+}
+
+.job-info {
+  display: flex;
+}
+
+.job-info-item {
+  height: 1%;
+}
+
+.job-info p {
+  margin-right: 1rem;
+}
+
+.job-field {
+  outline: 0.025rem solid gray;
+  border-radius: 1rem;
+
+  height: 1%; /* The value does not appear to change anything. */
+  margin-top: 1rem;
+  padding: 0rem 1rem;
+  /* margin-left: 1rem; */
+}
+
+.job-summary {
+  background-color: rgb(56, 55, 55);
+}
+
+.job-tech-stack p {
+  display: inline-flex;
+  margin-right: 1rem;
+}
+
+.job-info-item,
+.job-summary,
+.job-tech-stack,
+.job-tech-stack p,
+.your-role,
+.our-expectations,
+.our-offer,
+.benefits,
+.job-area-topics,
+.about-us {
+  outline: 0.025rem solid gray;
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+  margin-top: 1rem;
+}
+
+.about-us h2 {
+  margin-bottom: 0rem;
+}
+
+.company-info {
+  display: flex;
+  align-items: center;
+}
+
+.company-info img {
+  width: 8%;
+  margin-top: 1rem;
+}
+
+.about-us-company {
+  margin-bottom: 0rem;
+}
+
+.city {
+  margin-top: 0rem;
+}

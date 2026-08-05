@@ -1,5 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  faTag,
+  faClock,
+  faLayerGroup,
+  faCircleCheck,
+  faList,
+  faSackDollar,
+  faLocationDot,
+} from '@fortawesome/free-solid-svg-icons';
 import { map } from 'rxjs';
 
 import { JobService } from '../shared/services/job.service';
@@ -7,7 +17,8 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-job-details.component',
-  imports: [],
+  standalone: true,
+  imports: [FontAwesomeModule],
   templateUrl: './job-details.component.html',
   styleUrl: './job-details.component.css',
 })
@@ -17,6 +28,15 @@ export class JobDetailsComponent implements OnInit {
   route = inject(ActivatedRoute);
 
   currentJob = this.jobService.currentJob;
+  // FontAwesome icons.
+  faTag = faTag;
+  faClock = faClock;
+  faLayerGroup = faLayerGroup;
+  faCircleCheck = faCircleCheck;
+  faList = faList;
+  faSackDollar = faSackDollar;
+  faLocationDot = faLocationDot;
+
   // This gets the job ID from the route parameters and assigns it to the $jobId signal.
   $jobId = this.route.paramMap.pipe(map((params) => params.get('id')));
 
