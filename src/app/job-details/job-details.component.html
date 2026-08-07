@@ -1,6 +1,6 @@
 <header>
     <div class="position-company-name-image">
-        <img [src]='"../../assets/companies/" + currentJob()?.companyLogo'>
+        <img [src]='"../../assets/companies/" + currentJob()?.companyLogo' [alt]="currentJob()?.company + ' logo'">
         <div class="position-company-name">
             <h1 class="position">
                 {{currentJob()?.name}}
@@ -15,28 +15,28 @@
 
         <section class="job-info">
             <p class="job-info-item">
-                <fa-icon [icon]="faTag" style="color: rgb(7, 144, 241);"></fa-icon>
+                <fa-icon [icon]="faTag" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
                 Level<br><br>{{currentJob()?.positionLevel}}
             </p>
 
             <p class="job-info-item">
-                <fa-icon [icon]="faClock" style="color: rgb(7, 144, 241);"></fa-icon>
+                <fa-icon [icon]="faClock" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
                 Employment type<br><br>{{currentJob()?.employmentType}}
             </p>
 
             <p class="job-info-item">
-                <fa-icon [icon]="faLocationDot" style="color: rgb(7, 144, 241);"></fa-icon>
+                <fa-icon [icon]="faLocationDot" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
                 Location<br><br>{{currentJob()?.city}}
             </p>
 
             <p class="job-info-item">
-                <fa-icon [icon]="faSackDollar" style="color: rgb(7, 144, 241);"></fa-icon>
+                <fa-icon [icon]="faSackDollar" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
                 Salary<br><br>{{currentJob()?.salary}}
             </p>
 
             <div class="job-field">
                 <p>
-                    <fa-icon [icon]="faLayerGroup" style="color: rgb(7, 144, 241);"></fa-icon>
+                    <fa-icon [icon]="faLayerGroup" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
                     Job field
                 </p>
                 @for(themes of currentJob()?.jobThemes; track $index){
@@ -48,7 +48,7 @@
 
         <section class="job-summary">
             <p>
-                <fa-icon [icon]="faList" style="color: rgb(7, 144, 241);"></fa-icon>
+                <fa-icon [icon]="faList" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
                 Job Summary
             </p>
             <p>{{currentJob()?.jobSummary}}</p>
@@ -58,8 +58,9 @@
             <h2>Tech Stack</h2>
             <div class="tech-stack-name-logo">
                 @for(tech of currentJob()?.techStack; track $index){
-                <button>
-                    <img [src]='"../../assets/tech-stack/" + getTechLogo(tech)'>
+                <button type="button" [attr.aria-label]="'Filter positions by ' + tech"
+                    title="Click on this tech stack to find other positions with that tech stack.">
+                    <img [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
                     <span>{{tech}}</span>
                 </button>
                 }
@@ -68,78 +69,78 @@
 
         <section class="your-role">
             <h2>Your role</h2>
-            @for(role of currentJob()?.yourRole; track $index){
             <ul>
+                @for(role of currentJob()?.yourRole; track $index){
                 <li>
-                    <fa-icon [icon]="faCircleCheck" style="color: rgb(99, 230, 190);"></fa-icon>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(99, 230, 190);"></fa-icon>
                     {{role}}
                 </li>
+                }
             </ul>
-            }
         </section>
 
         <section class="our-expectations">
             <h2>Our expectations</h2>
             <h3>Qualifications</h3>
-            @for(qualifications of currentJob()?.yourQualifications; track $index){
             <ul>
+                @for(qualifications of currentJob()?.yourQualifications; track $index){
                 <li>
-                    <fa-icon [icon]="faCircleCheck" style="color: rgb(0, 142, 255);"></fa-icon>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(0, 142, 255);"></fa-icon>
                     {{qualifications}}
                 </li>
+                }
             </ul>
-            }
             <h3>Experience</h3>
-            @for(experience of currentJob()?.yourExperience; track $index){
             <ul>
+                @for(experience of currentJob()?.yourExperience; track $index){
                 <li>
-                    <fa-icon [icon]="faCircleCheck" style="color: rgb(0, 142, 255);"></fa-icon>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(0, 142, 255);"></fa-icon>
                     {{experience}}
                 </li>
+                }
             </ul>
-            }
         </section>
 
         <section class="our-offer">
             <h2>Our offer</h2>
-            @for(offer of currentJob()?.ourOffer; track $index){
             <ul>
+                @for(offer of currentJob()?.ourOffer; track $index){
                 <li>
-                    <fa-icon [icon]="faCircleCheck" style="color: rgb(212, 0, 255);"></fa-icon>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(212, 0, 255);"></fa-icon>
                     {{offer}}
                 </li>
+                }
             </ul>
-            }
         </section>
 
         <section class="benefits">
             <h2>Benefits</h2>
-            @for(benefits of currentJob()?.yourBenefits; track $index){
             <ul>
+                @for(benefits of currentJob()?.yourBenefits; track $index){
                 <li>
-                    <fa-icon [icon]="faCircleCheck" style="color: rgb(0, 219, 248);"></fa-icon>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(0, 219, 248);"></fa-icon>
                     {{benefits}}
                 </li>
+                }
             </ul>
-            }
         </section>
 
         <section class="job-area-topics">
             <h2>Job topics</h2>
-            @for(themes of currentJob()?.jobThemes; track $index){
             <ul>
+                @for(themes of currentJob()?.jobThemes; track $index){
                 <li>
-                    <fa-icon [icon]="faCircleCheck" style="color: rgb(56, 59, 59);"></fa-icon>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(56, 59, 59);"></fa-icon>
                     {{themes}}
                 </li>
+                }
             </ul>
-            }
         </section>
 
         <section class="about-us">
             <h2>About us</h2>
             <div class="company-info">
-                <img [src]='"../../assets/companies/" + currentJob()?.companyLogo'>
+                <img [src]='"../../assets/companies/" + currentJob()?.companyLogo' [alt]="">
                 <div class="company-name-city">
                     <h3 class="about-us-company">{{currentJob()?.company}}</h3>
                     <p class="city">{{currentJob()?.city}}</p>

@@ -23,8 +23,7 @@ li {
 
 button {
   background-color: unset;
-  border-color: unset;
-  border-style: none;
+  border: none;
 }
 
 .position-company-name-image {
@@ -64,20 +63,16 @@ button {
   height: 1%; /* The value does not appear to change anything. */
   margin-top: 1rem;
   padding: 0rem 1rem;
-  /* margin-left: 1rem; */
 }
 
 .job-summary {
   background-color: rgb(56, 55, 55);
 }
 
-.job-tech-stack {
-  margin-right: 1rem;
-}
-
 .job-tech-stack button img {
   width: 2rem;
   margin-left: 1rem;
+  margin-right: 0.5rem;
 }
 
 .tech-stack-name-logo {
@@ -88,13 +83,15 @@ button {
 .tech-stack-name-logo button {
   display: flex;
   align-items: center;
+  border: 0.025rem solid gray;
+  border-radius: 1rem;
+  padding: 0.5rem 0.5rem;
   margin-right: 1rem;
 }
 
 .job-info-item,
 .job-summary,
 .job-tech-stack,
-.tech-stack-name-logo button,
 .your-role,
 .our-expectations,
 .our-offer,
@@ -127,4 +124,19 @@ button {
 
 .city {
   margin-top: 0rem;
+}
+/* focus-visible makes the button outline visible only when navigated via keyboard. */
+.tech-stack-name-logo button:focus-visible {
+  outline: none;
+  border: 0.125rem solid rgb(255, 0, 0);
+}
+
+.tech-stack-name-logo button:focus {
+  outline: none;
+  border: 0.125rem solid rgb(255, 0, 0);
+}
+
+.tech-stack-name-logo button:hover {
+  background-color: rgb(70, 66, 66);
+  cursor: pointer;
 }
