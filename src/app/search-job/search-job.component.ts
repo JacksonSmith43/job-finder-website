@@ -45,12 +45,19 @@ export class SearchJobComponent implements OnInit {
     ]),
   });
 
-
-
   ngOnInit(): void {
     console.log('SearchJobComponent_ngOnInit().');
-    this.jobService.loadJobs();
-    this.jobService.determinesAvailableJobLength(this.allJobs(), '');
+
+    let filteredJobs = this.localStorageService.getFromLocalStorage('selectedJob');
+
+    if (!filteredJobs) {
+      this.jobService.loadJobs();
+      this.jobService.determinesAvailableJobLength(this.allJobs(), '');
+    } else {
+      this.filteredJobs.set(filteredJobs as JobType[]);
+      this.jobService.determinesAvailableJobLength(this.filteredJobs(), '');
+    }
+
     this.isVisible.set(true);
   }
 
@@ -95,20 +102,6 @@ export class SearchJobComponent implements OnInit {
       { label: 'Employment Type', value: job.employmentType },
       { label: 'Work Mode', value: job.workMode },
     ];
-  }
-
-  onFilterTechStack(tech: string) {
-    console.log('onFilterTechStack().');
-    console.log('onFilterTechStack()_tech: ', tech);
-    console.log('onFilterTechStack()_this.allJobs(): ', this.allJobs());
-
-    let filteredTechStackList: boolean[] = this.allJobs().map((job) =>
-      job.techStack.includes(tech),
-    );
-    console.log('onFilterTechStack()_filteredTechStackList: ', filteredTechStackList);
-
-    this.filteredJobs.set(this.allJobs().filter((job, index) => filteredTechStackList[index]));
-    console.log('onFilterTechStack()_this.filteredJobs(): ', this.filteredJobs());
   }
 
   onFilterJobInfo(info: JobInfoItem) {

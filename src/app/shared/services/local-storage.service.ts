@@ -4,7 +4,7 @@ import { JobType } from '../model/job-type.model';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
-  saveToLocalStorage(job: JobType, key: 'selectedJob'): JobType | string {
+  saveToLocalStorage(job: JobType | JobType[], key: 'selectedJob'): JobType | JobType[] | string {
     console.log('saveToLocalStorage().');
     console.log('saveToLocalStorage()_job: ', job);
 
@@ -17,11 +17,12 @@ export class LocalStorageService {
     return 'Wrong key.';
   }
 
-  getFromLocalStorage(key: 'selectedJob'): string | null {
+  getFromLocalStorage(key: 'selectedJob'): string | JobType[] | null {
     console.log('getFromLocalStorage().');
 
     if (key === 'selectedJob') {
-      return localStorage.getItem(key);
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : null;
     }
     return 'Wrong key.';
   }

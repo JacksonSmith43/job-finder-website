@@ -128,7 +128,7 @@ input:hover,
 
 .job-info-chip:hover,
 .tech-item:hover {
-  background-color: rgb(126, 104, 104);
+  background-color: unset;
 }
 
 button:focus,

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faTag,
@@ -18,7 +18,7 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 @Component({
   selector: 'app-job-details.component',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, RouterLink],
   templateUrl: './job-details.component.html',
   styleUrl: './job-details.component.css',
 })
@@ -27,7 +27,10 @@ export class JobDetailsComponent implements OnInit {
   localStorageService = inject(LocalStorageService);
   route = inject(ActivatedRoute);
 
+  allJobs = this.jobService.allJobs;
   currentJob = this.jobService.currentJob;
+  filteredJobs = this.jobService.filteredJobs;
+
   // FontAwesome icons.
   faTag = faTag;
   faClock = faClock;
@@ -77,5 +80,20 @@ export class JobDetailsComponent implements OnInit {
 
   getTechLogo(tech: string): string {
     return this.jobService.techStack[tech] ?? 'default-tech.png';
+  }
+
+  onFilterTechStack(tech: string) {
+    console.log('onFilterTechStack().');
+    console.log('onFilterTechStack()_tech: ', tech);
+    console.log('onFilterTechStack()_this.allJobs(): ', this.allJobs());
+
+    let filteredTechStackList: boolean[] = this.allJobs().map((job) =>
+      job.techStack.includes(tech),
+    );
+    console.log('onFilterTechStack()_filteredTechStackList: ', filteredTechStackList);
+
+    this.filteredJobs.set(this.allJobs().filter((job, index) => filteredTechStackList[index]));
+    console.log('onFilterTechStack()_this.filteredJobs(): ', this.filteredJobs());
+    this.localStorageService.saveToLocalStorage(this.filteredJobs(), "selectedJob");
   }
 }

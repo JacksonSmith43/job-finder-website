@@ -58,7 +58,7 @@
             <h2>Tech Stack</h2>
             <div class="tech-stack-name-logo">
                 @for(tech of currentJob()?.techStack; track $index){
-                <button type="button" [attr.aria-label]="'Filter positions by ' + tech"
+                <button type="button" (click)="onFilterTechStack(tech)" [routerLink]="'/homepage'" [attr.aria-label]="'Filter positions by ' + tech"
                     title="Click on this tech stack to find other positions with that tech stack.">
                     <img [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
                     <span>{{tech}}</span>

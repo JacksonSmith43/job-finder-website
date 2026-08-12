@@ -11,7 +11,7 @@ export class JobService implements OnInit {
   isVisible = signal<boolean>(false);
   searchAnnouncement = signal<string>('');
   currentJob = signal<JobType | null>(null);
-
+  
   readonly techStack: Record<string, string> = {
     Angular: 'angular.png',
     C: 'c.png',
@@ -296,7 +296,7 @@ export class JobService implements OnInit {
     if (filteredInput.length === 0) {
       this.searchAnnouncement.set(`0 positions found matching "${enteredInput}"`);
     } else if (filteredInput.length === 1) {
-      this.searchAnnouncement.set(`1 position found matching "${enteredInput}"`);
+      this.searchAnnouncement.set(`1 position found matching ${enteredInput}`);
     } else {
       // enteredInput is empty when the page has been reloaded.
       if (enteredInput === '') {
