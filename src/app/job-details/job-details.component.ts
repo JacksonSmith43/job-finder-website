@@ -60,10 +60,10 @@ export class JobDetailsComponent implements OnInit {
           this.currentJob.set(job);
         } else {
           console.log('getJobById()_Job not found for ID: ', jobId);
-          let jobLocalStorage = this.localStorageService.getFromLocalStorage('selectedJob');
+          const jobLocalStorage = this.localStorageService.getFromLocalStorage('selectedJob');
 
-          if (jobLocalStorage) {
-            this.jobService.currentJob.set(JSON.parse(jobLocalStorage as string));
+          if (jobLocalStorage && !Array.isArray(jobLocalStorage)) {
+            this.jobService.currentJob.set(jobLocalStorage);
             console.log(
               'getJobById()_Job fetched from LocalStorage_jobLocalStorage: ',
               jobLocalStorage,
@@ -94,6 +94,6 @@ export class JobDetailsComponent implements OnInit {
 
     this.filteredJobs.set(this.allJobs().filter((job, index) => filteredTechStackList[index]));
     console.log('onFilterTechStack()_this.filteredJobs(): ', this.filteredJobs());
-    this.localStorageService.saveToLocalStorage(this.filteredJobs(), "selectedJob");
+    this.localStorageService.saveToLocalStorage(this.filteredJobs(), 'filteredJobs');
   }
 }

@@ -48,13 +48,18 @@ export class SearchJobComponent implements OnInit {
   ngOnInit(): void {
     console.log('SearchJobComponent_ngOnInit().');
 
-    let filteredJobs = this.localStorageService.getFromLocalStorage('selectedJob');
+    const filteredJobs = this.localStorageService.getFromLocalStorage('filteredJobs');
+    console.log('SearchJobComponent_ngOnInit()_filteredJobs: ', filteredJobs);
 
-    if (!filteredJobs) {
+    if (!Array.isArray(filteredJobs) || filteredJobs.length === 0) {
+      console.log('SearchJobComponent_ngOnInit()_1');
+
       this.jobService.loadJobs();
       this.jobService.determinesAvailableJobLength(this.allJobs(), '');
     } else {
-      this.filteredJobs.set(filteredJobs as JobType[]);
+      console.log('SearchJobComponent_ngOnInit()_2');
+
+      this.filteredJobs.set(filteredJobs);
       this.jobService.determinesAvailableJobLength(this.filteredJobs(), '');
     }
 

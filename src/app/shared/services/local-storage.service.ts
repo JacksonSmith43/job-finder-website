@@ -2,28 +2,35 @@ import { Injectable } from '@angular/core';
 
 import { JobType } from '../model/job-type.model';
 
+type StorageKey = 'selectedJob' | 'filteredJobs';
+
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
-  saveToLocalStorage(job: JobType | JobType[], key: 'selectedJob'): JobType | JobType[] | string {
+  saveToLocalStorage(job: JobType | JobType[], key: StorageKey): JobType | JobType[] {
     console.log('saveToLocalStorage().');
     console.log('saveToLocalStorage()_job: ', job);
 
-    if (key === 'selectedJob') {
-      if (job != null) {
-        localStorage.setItem(key, JSON.stringify(job));
-        return job;
-      }
-    }
-    return 'Wrong key.';
+    localStorage.setItem(key, JSON.stringify(job));
+    return job;
   }
 
-  getFromLocalStorage(key: 'selectedJob'): string | JobType[] | null {
+  getFromLocalStorage(key: StorageKey): JobType | JobType[] | null {
     console.log('getFromLocalStorage().');
 
-    if (key === 'selectedJob') {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : null;
+    const item = localStorage.getItem(key);
+    if (!item) {
+      return null;
     }
-    return 'Wrong key.';
+
+    try {
+      return JSON.parse(item) as JobType | JobType[];
+    } catch {
+      return null;
+    }
+  }
+
+  removeFromLocalStorage(key: StorageKey): void {
+    console.log('removeFromLocalStorage().');
+    localStorage.removeItem(key);
   }
 }

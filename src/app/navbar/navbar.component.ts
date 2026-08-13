@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { JobService } from '../shared/services/job.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,9 +13,12 @@ import { JobService } from '../shared/services/job.service';
 })
 export class Navbar {
   jobService = inject(JobService);
+  localStorageService = inject(LocalStorageService);
 
   onHomepage(): void {
     console.log('Navbar_onHomepage().');
+    // Home icon should always reset persisted tech-stack filters.
+    this.localStorageService.removeFromLocalStorage('filteredJobs');
     this.jobService.loadJobs();
     this.jobService.determinesAvailableJobLength(this.jobService.allJobs(), '');
   }

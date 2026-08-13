@@ -11,7 +11,7 @@ export class JobService implements OnInit {
   isVisible = signal<boolean>(false);
   searchAnnouncement = signal<string>('');
   currentJob = signal<JobType | null>(null);
-  
+
   readonly techStack: Record<string, string> = {
     Angular: 'angular.png',
     C: 'c.png',
