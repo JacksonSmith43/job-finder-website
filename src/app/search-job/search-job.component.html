@@ -19,7 +19,7 @@
 
             <div class="job-result-output">
                 @for(job of filteredJobs(); track job.id) {
-                <div class="job-details" (click)="onSelectedJob(job)" [routerLink]="['jobDetails', job.id]"
+                <a class="job-details" (click)="onSelectedJob(job)" [routerLink]="['jobDetails', job.id]"
                     [attr.aria-labelledby]="'job-title-' + job.id">
 
                     <h2 [id]="'job-title-' + job.id">{{job.name}}</h2>
@@ -29,7 +29,9 @@
 
                     <div class="job-info-list">
                         @for(info of getJobInfoItems(job); track info.label){
-                        <button class="job-info-chip" type="button" (click)="onFilterJobInfo(info, $event)">
+                        <button class="job-info-chip" type="button" (click)="onFilterJobInfo(info, $event)"
+                            [attr.aria-label]="'Filter positions by ' + info.label"
+                            title="Click on this job info to find other positions with that property.">
                             <span>{{info.value}}</span>
                         </button>
                         }
@@ -38,14 +40,15 @@
                     <div class="tech-stack-list">
                         @for(tech of job.techStack; track tech){
                         <button class="tech-item" type="button" (click)="onFilterTechStack(tech, $event)"
-                            (click)="$event.stopPropagation()">
+                            [attr.aria-label]="'Filter positions by ' + tech"
+                            title="Click on this tech stack to find other positions with that tech stack.">
                             <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
                             <span>{{tech}}</span>
                         </button>
                         }
                     </div>
 
-                </div>
+                </a>
 
                 }
             </div>
