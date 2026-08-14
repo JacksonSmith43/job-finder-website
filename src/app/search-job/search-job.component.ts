@@ -129,6 +129,8 @@ export class SearchJobComponent implements OnInit {
 
     this.filteredJobs.set(this.allJobs().filter((job, index) => filteredJobInfo[index]));
     console.log('onFilterJobInfo()_this.filteredJobs(): ', this.filteredJobs());
+
+    this.jobService.determinesAvailableJobLength(this.filteredJobs(), '');
   }
 
   onSelectedJob(job: JobType) {
@@ -144,6 +146,8 @@ export class SearchJobComponent implements OnInit {
     event.preventDefault();
 
     this.jobService.filterTechStack(tech);
+
+    this.jobService.determinesAvailableJobLength(this.filteredJobs(), '');
   }
 
   get inputIsValid() {

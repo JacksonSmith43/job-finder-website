@@ -295,6 +295,8 @@ export class JobService implements OnInit {
 
   determinesAvailableJobLength(filteredInput: JobType[], enteredInput: string): void {
     console.log('JobService_determinesAvailableJobLength().');
+    console.log('JobService_determinesAvailableJobLength()_filteredInput:', filteredInput);
+    console.log('JobService_determinesAvailableJobLength()_enteredInput: ', enteredInput);
 
     if (filteredInput.length === 0) {
       this.searchAnnouncement.set(`0 positions found matching "${enteredInput}"`);
