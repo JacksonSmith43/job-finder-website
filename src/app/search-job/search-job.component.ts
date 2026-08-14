@@ -129,11 +129,25 @@ export class SearchJobComponent implements OnInit {
 
     this.filteredJobs.set(this.allJobs().filter((job, index) => filteredJobInfo[index]));
     console.log('onFilterJobInfo()_this.filteredJobs(): ', this.filteredJobs());
+
+    this.jobService.determinesAvailableJobLength(this.filteredJobs(), '');
   }
 
   onSelectedJob(job: JobType) {
     console.log('onSelectedJob().');
     this.localStorageService.saveToLocalStorage(job, 'selectedJob');
+  }
+
+  onFilterTechStack(tech: string, event: Event) {
+    console.log('SearchJobComponent_onFilterTechStack().');
+
+    // So that when clicking on the tech-stack-list area, that one does not get redirected to the job details page.
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.jobService.filterTechStack(tech);
+
+    this.jobService.determinesAvailableJobLength(this.filteredJobs(), '');
   }
 
   get inputIsValid() {
