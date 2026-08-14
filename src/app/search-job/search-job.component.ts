@@ -109,9 +109,13 @@ export class SearchJobComponent implements OnInit {
     ];
   }
 
-  onFilterJobInfo(info: JobInfoItem) {
+  onFilterJobInfo(info: JobInfoItem, event: Event) {
     console.log('onFilterJobInfo().');
     console.log('onFilterJobInfo()_info: ', info);
+
+    // Prevent bubbling to the parent card click/routerLink.
+    event.stopPropagation();
+    event.preventDefault();
 
     let filteredJobInfo: boolean[] = this.allJobs().map(
       (job) =>

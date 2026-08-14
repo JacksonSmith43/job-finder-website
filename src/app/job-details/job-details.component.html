@@ -44,7 +44,13 @@
                 }
             </div>
 
+            <div class="application-button-container" id="application-button-container-top">
+                <button class="application-button" id="application-button-top" matButton="filled" type="button" (click)="onApply()"
+                    [attr.aria-label]="'Navigate to the application page.'" title="Navigate to the application page.">Apply</button>
+            </div>
+
         </section>
+
 
         <section class="job-summary">
             <p>
@@ -58,7 +64,8 @@
             <h2>Tech Stack</h2>
             <div class="tech-stack-name-logo">
                 @for(tech of currentJob()?.techStack; track $index){
-                <button type="button" (click)="onFilterTechStack(tech)" [routerLink]="'/homepage'" [attr.aria-label]="'Filter positions by ' + tech"
+                <button class="tech-stack-button" type="button" (click)="onFilterTechStack(tech)" [routerLink]="'/homepage'"
+                    [attr.aria-label]="'Filter positions by ' + tech"
                     title="Click on this tech stack to find other positions with that tech stack.">
                     <img [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
                     <span>{{tech}}</span>
@@ -149,6 +156,11 @@
 
             <p>{{currentJob()?.aboutUs}}</p>
         </section>
+
+        <div class="application-button-container" id="application-button-container-bottom">
+            <button class="application-button" id="application-button-bottom" matButton="filled" type="button" (click)="onApply()"
+                [attr.aria-label]="'Navigate to the application page.'" title="Navigate to the application page.">Apply</button>
+        </div>
 
     </div>
 </main>

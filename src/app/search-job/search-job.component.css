@@ -119,7 +119,6 @@ button {
   margin-left: 1rem;
 }
 
-button:hover,
 input:hover,
 .job-details:hover {
   background-color: rgb(59, 59, 59);
@@ -128,11 +127,18 @@ input:hover,
 
 .job-info-chip:hover,
 .tech-item:hover {
-  background-color: unset;
+  background-color: rgb(37, 35, 35);
+  cursor: pointer;
 }
 
-button:focus,
+.search-button:hover {
+  background-color: rgb(7, 74, 141);
+}
+
+.search-button:focus,
 input:focus,
-.job-details:focus {
+.job-details:focus,
+.job-info-chip:focus,
+.tech-item:focus {
   outline: 0.25rem solid red;
 }

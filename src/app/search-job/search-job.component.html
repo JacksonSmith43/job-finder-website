@@ -5,7 +5,7 @@
     <form class="form-field-container" (ngSubmit)="onSubmit(enteredInput)" [formGroup]="form">
         <input type="text" placeholder="Tech Stack, Job, City" aria-label="Search field." aria-describedby="error-message"
             title="Enter a tech stack, like Angular, location or a job title." formControlName="userInput" #enteredInput>
-        <button type="submit" matButton="filled">Search</button>
+        <button class="search-button" type="submit" matButton="filled">Search</button>
     </form>
 
     <div class="output-container">
@@ -20,29 +20,30 @@
             <div class="job-result-output">
                 @for(job of filteredJobs(); track job.id) {
                 <div class="job-details" (click)="onSelectedJob(job)" [routerLink]="['jobDetails', job.id]"
-                    [attr.aria-labelledby]="'job-title-' + job.id" tabindex="0">
-                    <h2 [id]="'job-title-' + job.id">{{job.name}}</h2>
-                    <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo' [alt]="job.company + ' logo.'">
-                    <h2>{{job.company}}</h2>
-                    <p>{{job.description}}</p>
+                    [attr.aria-labelledby]="'job-title-' + job.id">
+                   
+                        <h2 [id]="'job-title-' + job.id">{{job.name}}</h2>
+                        <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo' [alt]="job.company + ' logo.'">
+                        <h2>{{job.company}}</h2>
+                        <p>{{job.description}}</p>
 
-                    <div class="job-info-list">
-                        @for(info of getJobInfoItems(job); track info.label){
-                        <button class="job-info-chip" type="button" (click)="onFilterJobInfo(info)">
-                            <span>{{info.value}}</span>
-                        </button>
-                        }
-                    </div>
+                        <div class="job-info-list">
+                            @for(info of getJobInfoItems(job); track info.label){
+                            <button class="job-info-chip" type="button" (click)="onFilterJobInfo(info, $event)">
+                                <span>{{info.value}}</span>
+                            </button>
+                            }
+                        </div>
 
-                    <div class="tech-stack-list">
-                        @for(tech of job.techStack; track tech){
-                        <button class="tech-item" type="button">
-                            <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
-                            <span>{{tech}}</span>
-                        </button>
-                        }
-                    </div>
-
+                        <div class="tech-stack-list">
+                            @for(tech of job.techStack; track tech){
+                            <button class="tech-item" type="button" (click)="$event.stopPropagation()">
+                                <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
+                                <span>{{tech}}</span>
+                            </button>
+                            }
+                        </div>
+                 
                 </div>
 
                 }

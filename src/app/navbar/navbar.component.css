@@ -35,16 +35,17 @@
   gap: 1rem;
 }
 
-button:hover {
+.control-buttons button:hover {
+  background-color: rgb(7, 74, 141);
+}
+
+.icon-button:hover {
   background-color: rgb(68, 71, 76);
   border-radius: 1rem;
 }
 
-button:focus {
+.icon-button:focus,
+.control-buttons button:focus {
   outline: 0.25rem solid red;
   border-radius: 40rem;
-}
-
-.icon-button:focus {
-  border-radius: 10%; /* Makes it almost squared. */
 }

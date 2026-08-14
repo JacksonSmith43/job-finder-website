@@ -11,6 +11,7 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import { map } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 import { JobService } from '../shared/services/job.service';
 import { LocalStorageService } from '../shared/services/local-storage.service';
@@ -18,7 +19,7 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 @Component({
   selector: 'app-job-details.component',
   standalone: true,
-  imports: [FontAwesomeModule, RouterLink],
+  imports: [FontAwesomeModule, RouterLink, MatButtonModule],
   templateUrl: './job-details.component.html',
   styleUrl: './job-details.component.css',
 })
@@ -95,5 +96,9 @@ export class JobDetailsComponent implements OnInit {
     this.filteredJobs.set(this.allJobs().filter((job, index) => filteredTechStackList[index]));
     console.log('onFilterTechStack()_this.filteredJobs(): ', this.filteredJobs());
     this.localStorageService.saveToLocalStorage(this.filteredJobs(), 'filteredJobs');
+  }
+
+  onApply() {
+    console.log('onApply().');
   }
 }

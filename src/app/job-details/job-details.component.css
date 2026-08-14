@@ -21,7 +21,7 @@ li {
   list-style: none;
 }
 
-button {
+.tech-stack-button {
   background-color: unset;
   border: none;
 }
@@ -125,13 +125,37 @@ button {
 .city {
   margin-top: 0rem;
 }
+
+.application-button {
+  outline: 0.025rem solid gray;
+  border-radius: 1rem;
+
+  padding: 1rem 1rem;
+}
+
+#application-button-container-top {
+  display: flex;
+  align-items: center;
+
+  margin-left: auto;
+  margin-right: 2rem;
+}
+
+#application-button-container-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
 /* focus-visible makes the button outline visible only when navigated via keyboard. */
 .tech-stack-name-logo button:focus-visible {
   outline: none;
   border: 0.125rem solid rgb(255, 0, 0);
 }
 
-.tech-stack-name-logo button:focus {
+.tech-stack-name-logo button:focus,
+.application-button:focus {
   outline: none;
   border: 0.125rem solid rgb(255, 0, 0);
 }
@@ -139,4 +163,8 @@ button {
 .tech-stack-name-logo button:hover {
   background-color: rgb(70, 66, 66);
   cursor: pointer;
+}
+
+.application-button:hover {
+  background-color: rgb(7, 74, 141);
 }
