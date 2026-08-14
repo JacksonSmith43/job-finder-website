@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAnchor } from '@angular/material/button';
@@ -9,24 +9,33 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { JobService } from '../shared/services/job.service';
 import { JobInfoItem, JobType } from '../shared/model/job-type.model';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-search-job.component',
-  imports: [MatFormFieldModule, MatInputModule, MatAnchor, FormsModule, ReactiveFormsModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatAnchor,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
   templateUrl: './search-job.component.html',
   styleUrl: './search-job.component.css',
 })
 export class SearchJobComponent implements OnInit {
   jobService = inject(JobService);
-
-  isVisible = signal<boolean>(false);
-  searchAnnouncement = signal<string>('');
+  localStorageService = inject(LocalStorageService);
 
   allJobs = this.jobService.allJobs;
   filteredJobs = this.jobService.filteredJobs;
+  isVisible = this.jobService.isVisible;
+  searchAnnouncement = this.jobService.searchAnnouncement;
 
   form = new FormGroup({
     userInput: new FormControl('', [
@@ -36,36 +45,25 @@ export class SearchJobComponent implements OnInit {
     ]),
   });
 
-  readonly techStack: Record<string, string> = {
-    Angular: 'angular.png',
-    C: 'c.png',
-    'C++': 'c++.png',
-    CSS: 'css.png',
-    Docker: 'docker.png',
-    Git: 'git.png',
-    HTML: 'html.png',
-    Java: 'java.png',
-    JavaScript: 'js.png',
-    Python: 'python.png',
-    React: 'react.png',
-    'Spring Boot': 'spring-boot.png',
-    Adobe: 'adobe.png',
-    Atlassian: 'atlassian.png',
-    Claude: 'claude.png',
-    Confluence: 'confluence.png',
-    'Embedded C': 'embedded-c.png',
-    Figma: 'figma.png',
-    I2C: 'i2c.png',
-    Jira: 'jira.png',
-    SPI: 'spi.png',
-    STM32: 'stm32.png',
-    UART: 'uart.png',
-    Zephyr: 'zephyr.png',
-  };
-
   ngOnInit(): void {
     console.log('SearchJobComponent_ngOnInit().');
-    this.jobService.loadJobs();
+
+    const filteredJobs = this.localStorageService.getFromLocalStorage('filteredJobs');
+    console.log('SearchJobComponent_ngOnInit()_filteredJobs: ', filteredJobs);
+
+    if (!Array.isArray(filteredJobs) || filteredJobs.length === 0) {
+      console.log('SearchJobComponent_ngOnInit()_1');
+
+      this.jobService.loadJobs();
+      this.jobService.determinesAvailableJobLength(this.allJobs(), '');
+    } else {
+      console.log('SearchJobComponent_ngOnInit()_2');
+
+      this.filteredJobs.set(filteredJobs);
+      this.jobService.determinesAvailableJobLength(this.filteredJobs(), '');
+    }
+
+    this.isVisible.set(true);
   }
 
   onSubmit(enteredInput: HTMLInputElement): void {
@@ -91,20 +89,14 @@ export class SearchJobComponent implements OnInit {
     this.filteredJobs.set(filteredInput);
     console.log('SearchJobComponent_onSubmit()_filteredInput: ', filteredInput);
 
-    if (filteredInput.length === 0) {
-      this.searchAnnouncement.set('No positions found.');
-    } else if (filteredInput.length === 1) {
-      this.searchAnnouncement.set('1 position found.');
-    } else {
-      this.searchAnnouncement.set(`${filteredInput.length} positions found.`);
-    }
+    this.jobService.determinesAvailableJobLength(filteredInput, userInput);
 
     this.isVisible.set(true);
     this.form.reset();
   }
 
   getTechLogo(tech: string): string {
-    return this.techStack[tech] ?? 'default-tech.png';
+    return this.jobService.techStack[tech] ?? 'default-tech.png';
   }
 
   getJobInfoItems(job: JobType): JobInfoItem[] {
@@ -117,23 +109,13 @@ export class SearchJobComponent implements OnInit {
     ];
   }
 
-  onFilterTechStack(tech: string) {
-    console.log('onFilterTechStack().');
-    console.log('onFilterTechStack()_tech: ', tech);
-    console.log('onFilterTechStack()_this.allJobs(): ', this.allJobs());
-
-    let filteredTechStackList: boolean[] = this.allJobs().map((job) =>
-      job.techStack.includes(tech),
-    );
-    console.log('onFilterTechStack()_filteredTechStackList: ', filteredTechStackList);
-
-    this.filteredJobs.set(this.allJobs().filter((job, index) => filteredTechStackList[index]));
-    console.log('onFilterTechStack()_this.filteredJobs(): ', this.filteredJobs());
-  }
-
-  onFilterJobInfo(info: JobInfoItem) {
+  onFilterJobInfo(info: JobInfoItem, event: Event) {
     console.log('onFilterJobInfo().');
     console.log('onFilterJobInfo()_info: ', info);
+
+    // Prevent bubbling to the parent card click/routerLink.
+    event.stopPropagation();
+    event.preventDefault();
 
     let filteredJobInfo: boolean[] = this.allJobs().map(
       (job) =>
@@ -147,6 +129,11 @@ export class SearchJobComponent implements OnInit {
 
     this.filteredJobs.set(this.allJobs().filter((job, index) => filteredJobInfo[index]));
     console.log('onFilterJobInfo()_this.filteredJobs(): ', this.filteredJobs());
+  }
+
+  onSelectedJob(job: JobType) {
+    console.log('onSelectedJob().');
+    this.localStorageService.saveToLocalStorage(job, 'selectedJob');
   }
 
   get inputIsValid() {

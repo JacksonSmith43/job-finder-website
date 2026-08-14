@@ -1,0 +1,166 @@
+<header>
+    <div class="position-company-name-image">
+        <img [src]='"../../assets/companies/" + currentJob()?.companyLogo' [alt]="currentJob()?.company + ' logo'">
+        <div class="position-company-name">
+            <h1 class="position">
+                {{currentJob()?.name}}
+            </h1>
+            <p class="company">{{currentJob()?.company}}</p>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="job-details">
+
+        <section class="job-info">
+            <p class="job-info-item">
+                <fa-icon [icon]="faTag" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
+                Level<br><br>{{currentJob()?.positionLevel}}
+            </p>
+
+            <p class="job-info-item">
+                <fa-icon [icon]="faClock" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
+                Employment type<br><br>{{currentJob()?.employmentType}}
+            </p>
+
+            <p class="job-info-item">
+                <fa-icon [icon]="faLocationDot" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
+                Location<br><br>{{currentJob()?.city}}
+            </p>
+
+            <p class="job-info-item">
+                <fa-icon [icon]="faSackDollar" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
+                Salary<br><br>{{currentJob()?.salary}}
+            </p>
+
+            <div class="job-field">
+                <p>
+                    <fa-icon [icon]="faLayerGroup" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
+                    Job field
+                </p>
+                @for(themes of currentJob()?.jobThemes; track $index){
+                <p class="job-field-item">{{themes}}</p>
+                }
+            </div>
+
+            <div class="application-button-container" id="application-button-container-top">
+                <button class="application-button" id="application-button-top" matButton="filled" type="button" (click)="onApply()"
+                    [attr.aria-label]="'Navigate to the application page.'" title="Navigate to the application page.">Apply</button>
+            </div>
+
+        </section>
+
+
+        <section class="job-summary">
+            <p>
+                <fa-icon [icon]="faList" aria-hidden="true" style="color: rgb(7, 144, 241);"></fa-icon>
+                Job Summary
+            </p>
+            <p>{{currentJob()?.jobSummary}}</p>
+        </section>
+
+        <section class="job-tech-stack">
+            <h2>Tech Stack</h2>
+            <div class="tech-stack-name-logo">
+                @for(tech of currentJob()?.techStack; track $index){
+                <button class="tech-stack-button" type="button" (click)="onFilterTechStack(tech)" [routerLink]="'/homepage'"
+                    [attr.aria-label]="'Filter positions by ' + tech"
+                    title="Click on this tech stack to find other positions with that tech stack.">
+                    <img [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
+                    <span>{{tech}}</span>
+                </button>
+                }
+            </div>
+        </section>
+
+        <section class="your-role">
+            <h2>Your role</h2>
+            <ul>
+                @for(role of currentJob()?.yourRole; track $index){
+                <li>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(99, 230, 190);"></fa-icon>
+                    {{role}}
+                </li>
+                }
+            </ul>
+        </section>
+
+        <section class="our-expectations">
+            <h2>Our expectations</h2>
+            <h3>Qualifications</h3>
+            <ul>
+                @for(qualifications of currentJob()?.yourQualifications; track $index){
+                <li>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(0, 142, 255);"></fa-icon>
+                    {{qualifications}}
+                </li>
+                }
+            </ul>
+            <h3>Experience</h3>
+            <ul>
+                @for(experience of currentJob()?.yourExperience; track $index){
+                <li>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(0, 142, 255);"></fa-icon>
+                    {{experience}}
+                </li>
+                }
+            </ul>
+        </section>
+
+        <section class="our-offer">
+            <h2>Our offer</h2>
+            <ul>
+                @for(offer of currentJob()?.ourOffer; track $index){
+                <li>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(212, 0, 255);"></fa-icon>
+                    {{offer}}
+                </li>
+                }
+            </ul>
+        </section>
+
+        <section class="benefits">
+            <h2>Benefits</h2>
+            <ul>
+                @for(benefits of currentJob()?.yourBenefits; track $index){
+                <li>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(0, 219, 248);"></fa-icon>
+                    {{benefits}}
+                </li>
+                }
+            </ul>
+        </section>
+
+        <section class="job-area-topics">
+            <h2>Job topics</h2>
+            <ul>
+                @for(themes of currentJob()?.jobThemes; track $index){
+                <li>
+                    <fa-icon [icon]="faCircleCheck" aria-hidden="true" style="color: rgb(56, 59, 59);"></fa-icon>
+                    {{themes}}
+                </li>
+                }
+            </ul>
+        </section>
+
+        <section class="about-us">
+            <h2>About us</h2>
+            <div class="company-info">
+                <img [src]='"../../assets/companies/" + currentJob()?.companyLogo' [alt]="">
+                <div class="company-name-city">
+                    <h3 class="about-us-company">{{currentJob()?.company}}</h3>
+                    <p class="city">{{currentJob()?.city}}</p>
+                </div>
+            </div>
+
+            <p>{{currentJob()?.aboutUs}}</p>
+        </section>
+
+        <div class="application-button-container" id="application-button-container-bottom">
+            <button class="application-button" id="application-button-bottom" matButton="filled" type="button" (click)="onApply()"
+                [attr.aria-label]="'Navigate to the application page.'" title="Navigate to the application page.">Apply</button>
+        </div>
+
+    </div>
+</main>
