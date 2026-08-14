@@ -136,6 +136,16 @@ export class SearchJobComponent implements OnInit {
     this.localStorageService.saveToLocalStorage(job, 'selectedJob');
   }
 
+  onFilterTechStack(tech: string, event: Event) {
+    console.log('SearchJobComponent_onFilterTechStack().');
+
+    // So that when clicking on the tech-stack-list area, that one does not get redirected to the job details page.
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.jobService.filterTechStack(tech);
+  }
+
   get inputIsValid() {
     console.log('inputIsValid().');
 

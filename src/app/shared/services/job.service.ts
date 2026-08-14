@@ -1,11 +1,14 @@
-import { Injectable, OnInit, signal } from '@angular/core';
+import { inject, Injectable, OnInit, signal } from '@angular/core';
 
 import { JobType } from '../model/job-type.model';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JobService implements OnInit {
+  localStorageService = inject(LocalStorageService);
+
   allJobs = signal<JobType[]>([]);
   filteredJobs = signal<JobType[]>([]);
   isVisible = signal<boolean>(false);
@@ -307,5 +310,20 @@ export class JobService implements OnInit {
         );
       }
     }
+  }
+
+  filterTechStack(tech: string) {
+    console.log('filterTechStack().');
+    console.log('filterTechStack()_tech: ', tech);
+    console.log('filterTechStack()_this.allJobs(): ', this.allJobs());
+
+    let filteredTechStackList: boolean[] = this.allJobs().map((job) =>
+      job.techStack.includes(tech),
+    );
+    console.log('filterTechStack()_filteredTechStackList: ', filteredTechStackList);
+
+    this.filteredJobs.set(this.allJobs().filter((job, index) => filteredTechStackList[index]));
+    console.log('filterTechStack()_this.filteredJobs(): ', this.filteredJobs());
+    this.localStorageService.saveToLocalStorage(this.filteredJobs(), 'filteredJobs');
   }
 }

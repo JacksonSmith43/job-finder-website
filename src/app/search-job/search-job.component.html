@@ -21,29 +21,30 @@
                 @for(job of filteredJobs(); track job.id) {
                 <div class="job-details" (click)="onSelectedJob(job)" [routerLink]="['jobDetails', job.id]"
                     [attr.aria-labelledby]="'job-title-' + job.id">
-                   
-                        <h2 [id]="'job-title-' + job.id">{{job.name}}</h2>
-                        <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo' [alt]="job.company + ' logo.'">
-                        <h2>{{job.company}}</h2>
-                        <p>{{job.description}}</p>
 
-                        <div class="job-info-list">
-                            @for(info of getJobInfoItems(job); track info.label){
-                            <button class="job-info-chip" type="button" (click)="onFilterJobInfo(info, $event)">
-                                <span>{{info.value}}</span>
-                            </button>
-                            }
-                        </div>
+                    <h2 [id]="'job-title-' + job.id">{{job.name}}</h2>
+                    <img class="company-logo" [src]='"../../assets/companies/" + job.companyLogo' [alt]="job.company + ' logo.'">
+                    <h2>{{job.company}}</h2>
+                    <p>{{job.description}}</p>
 
-                        <div class="tech-stack-list">
-                            @for(tech of job.techStack; track tech){
-                            <button class="tech-item" type="button" (click)="$event.stopPropagation()">
-                                <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
-                                <span>{{tech}}</span>
-                            </button>
-                            }
-                        </div>
-                 
+                    <div class="job-info-list">
+                        @for(info of getJobInfoItems(job); track info.label){
+                        <button class="job-info-chip" type="button" (click)="onFilterJobInfo(info, $event)">
+                            <span>{{info.value}}</span>
+                        </button>
+                        }
+                    </div>
+
+                    <div class="tech-stack-list">
+                        @for(tech of job.techStack; track tech){
+                        <button class="tech-item" type="button" (click)="onFilterTechStack(tech, $event)"
+                            (click)="$event.stopPropagation()">
+                            <img class="tech-stack-logo" [src]='"../../assets/tech-stack/" + getTechLogo(tech)' [alt]="">
+                            <span>{{tech}}</span>
+                        </button>
+                        }
+                    </div>
+
                 </div>
 
                 }
