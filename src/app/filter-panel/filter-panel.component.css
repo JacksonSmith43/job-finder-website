@@ -1,0 +1,18 @@
+h3 {
+  padding: 0.5rem 1rem;
+}
+
+.filter-search-container {
+  outline: 0.025rem solid gray;
+  width: 20rem;
+  margin-top: 7rem;
+}
+
+.filter-search-options {
+  display: grid;
+}
+
+.filter-search-item {
+  display: flex;
+  gap: 1rem;
+}

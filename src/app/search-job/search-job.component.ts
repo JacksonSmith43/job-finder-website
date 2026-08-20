@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 import { JobService } from '../shared/services/job.service';
 import { JobInfoItem, JobType } from '../shared/model/job-type.model';
 import { LocalStorageService } from '../shared/services/local-storage.service';
+import { FilterPanelComponent } from "../filter-panel/filter-panel.component";
 
 @Component({
   selector: 'app-search-job.component',
@@ -24,7 +25,8 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
     FormsModule,
     ReactiveFormsModule,
     RouterLink,
-  ],
+    FilterPanelComponent
+],
   templateUrl: './search-job.component.html',
   styleUrl: './search-job.component.css',
 })

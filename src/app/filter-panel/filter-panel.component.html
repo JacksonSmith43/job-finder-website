@@ -1,1 +1,89 @@
-<p>filters.component works!</p>
+<div class="filter-search-container">
+    <h3>Filter Jobs</h3>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Level</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(level of levelOptions(); track $index){
+            <div class="filter-search-item">
+                <input [id]="'level-' + $index" type="checkbox">
+                <label [for]="'level-' + $index">{{level}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Employment Type</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(type of employmentTypeOptions(); track $index){
+            <div class="filter-search-item">
+                <input [id]="'type-' + $index" type="checkbox">
+                <label [for]="'type-' + $index"> {{type}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Work Mode</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(mode of workModeOptions(); track $index){
+            <div class="filter-search-item">
+                <input [id]="'mode-' + $index" type="checkbox">
+                <label [for]="'mode-' + $index"> {{mode}}</label>
+            </div>
+            }
+        </div>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Salary</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(salary of allJobs(); track salary.id){
+            <div class="filter-search-item">
+                <input [id]="'salary-' + $index" type="checkbox">
+                <label [for]="'salary-' + $index"> {{salary.salary}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Location</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(location of locationOptions(); track $index){
+            <div class="filter-search-item">
+                <input [id]="'location-' + $index" type="checkbox">
+                <label [for]="'location-' + $index"> {{location}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Job Field</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(field of jobFieldOptions(); track $index){
+            <div class="filter-search-item">
+                <input [id]="'field-' + $index" type="checkbox">
+                <label [for]="'field-' + $index"> {{field}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+</div>

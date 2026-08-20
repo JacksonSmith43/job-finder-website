@@ -7,6 +7,16 @@ a {
   color: inherit;
 }
 
+aside {
+  display: flex;
+  float: left;
+}
+
+main {
+  display: flex;
+  float: right;
+}
+
 .search-job-container {
   display: block;
   margin-top: 4rem;
