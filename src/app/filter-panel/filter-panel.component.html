@@ -35,7 +35,7 @@
         </mat-expansion-panel-header>
         <div class="filter-search-options">
             @for(mode of workModeOptions(); track $index){
-            <div class="filter-search-item">
+            <div class="filter-search-item" (change)="onFilterJobs(mode,'workMode')">
                 <input [id]="'mode-' + $index" type="checkbox">
                 <label [for]="'mode-' + $index"> {{mode}}</label>
             </div>
@@ -86,4 +86,5 @@
         </div>
     </mat-expansion-panel>
 
+    <button>Reset Filter</button>
 </div>

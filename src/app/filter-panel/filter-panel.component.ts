@@ -15,6 +15,10 @@ export class FilterPanelComponent {
   jobService = inject(JobService);
 
   allJobs = this.jobService.allJobs;
+  filteredJobs = this.jobService.filteredJobs;
+
+  // Currently selected values per filter category, e.g. { workMode: Set('Hybrid', 'Onsite') }.
+  selectedWorkModes = new Set<string>();
 
   levelOptions = computed(() => {
     let levels = this.allJobs().map((l) => l.positionLevel);
@@ -31,6 +35,7 @@ export class FilterPanelComponent {
     return Array.from(new Set(workMode));
   });
 
+  // TODO: Has duplicates.
   salaryOptions = computed(() => {
     let salary = this.allJobs().map((s) => s.salary);
     return Array.from(new Set(salary));
@@ -53,4 +58,30 @@ export class FilterPanelComponent {
         .flat()
     );
   });
+
+  onFilterJobs(jobProperty: string, propertyCategorie: string) {
+    console.log('onFilterJobs().');
+    console.log('onFilterJobs()_jobProperty: ', jobProperty);
+    console.log('onFilterJobs()_this.selectedWorkModes: ', this.selectedWorkModes);
+
+    if (propertyCategorie === 'workMode') {
+      if (this.selectedWorkModes.has(jobProperty)) {
+        this.selectedWorkModes.delete(jobProperty);
+
+      } else {
+        this.selectedWorkModes.add(jobProperty);
+      }
+    }
+
+    // No checkbox selected shows all jobs, otherwise OR-match against the selected values.
+    const selectedProperties =
+      this.selectedWorkModes.size === 0
+        ? this.allJobs()
+        : this.allJobs().filter((job) => this.selectedWorkModes.has(job.workMode));
+
+    this.filteredJobs.set(selectedProperties);
+    console.log('onFilterJobs()_this.filteredJobs(): ', this.filteredJobs());
+
+    this.jobService.determinesAvailableJobLength(selectedProperties, '');
+  }
 }
