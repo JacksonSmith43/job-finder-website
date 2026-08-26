@@ -7,7 +7,7 @@
         </mat-expansion-panel-header>
         <div class="filter-search-options">
             @for(level of levelOptions(); track $index){
-            <div class="filter-search-item">
+            <div class="filter-search-item" (change)="onFilterJobs(level,'positionLevel')">
                 <input [id]="'level-' + $index" type="checkbox">
                 <label [for]="'level-' + $index">{{level}}</label>
             </div>
@@ -21,7 +21,7 @@
         </mat-expansion-panel-header>
         <div class="filter-search-options">
             @for(type of employmentTypeOptions(); track $index){
-            <div class="filter-search-item">
+            <div class="filter-search-item" (change)="onFilterJobs(type,'employmentType')">
                 <input [id]="'type-' + $index" type="checkbox">
                 <label [for]="'type-' + $index"> {{type}}</label>
             </div>
@@ -49,10 +49,10 @@
             <mat-panel-title>Salary</mat-panel-title>
         </mat-expansion-panel-header>
         <div class="filter-search-options">
-            @for(salary of allJobs(); track salary.id){
-            <div class="filter-search-item">
+            @for(salary of salaryOptions(); track $index){
+            <div class="filter-search-item" (change)="onFilterJobs(salary.toString(),'salary')">
                 <input [id]="'salary-' + $index" type="checkbox">
-                <label [for]="'salary-' + $index"> {{salary.salary}}</label>
+                <label [for]="'salary-' + $index"> {{salary}}</label>
             </div>
             }
         </div>
@@ -64,7 +64,7 @@
         </mat-expansion-panel-header>
         <div class="filter-search-options">
             @for(location of locationOptions(); track $index){
-            <div class="filter-search-item">
+            <div class="filter-search-item" (change)="onFilterJobs(location,'city')">
                 <input [id]="'location-' + $index" type="checkbox">
                 <label [for]="'location-' + $index"> {{location}}</label>
             </div>
@@ -78,7 +78,7 @@
         </mat-expansion-panel-header>
         <div class="filter-search-options">
             @for(field of jobFieldOptions(); track $index){
-            <div class="filter-search-item">
+            <div class="filter-search-item" (change)="onFilterJobs(field,'jobThemes')">
                 <input [id]="'field-' + $index" type="checkbox">
                 <label [for]="'field-' + $index"> {{field}}</label>
             </div>
