@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
+import { MatAnchor } from '@angular/material/button';
 
 import { JobService } from '../shared/services/job.service';
 
@@ -12,7 +13,7 @@ type SelectedFilters = Record<PropertyCategory, Set<string>>;
 @Component({
   selector: 'app-filter-panel',
   standalone: true,
-  imports: [MatExpansionModule, FormsModule],
+  imports: [MatExpansionModule, FormsModule, MatAnchor],
   templateUrl: './filter-panel.component.html',
   styleUrl: './filter-panel.component.css',
 })
@@ -130,5 +131,22 @@ export class FilterPanelComponent {
     // `job[category]` is dynamic property access, e.g. job['city'] or job['workMode'].
     // Returning a string gives us one consistent type for Set comparison.
     return value === null || value === undefined ? '' : value.toString();
+  }
+
+  onResetFilters() {
+    console.log('onResetFilters().');
+    for (const selectedCategory of Object.values(this.selectedFilters)) {
+      console.log('onResetFilters()_selectedCategory: ', selectedCategory);
+
+      selectedCategory.clear();
+    }
+
+    const resetProperties = this.allJobs();
+    this.filteredJobs.set(resetProperties);
+    this.jobService.determinesAvailableJobLength(resetProperties, '');
+  }
+
+  isSelected(jobProperty: string, propertyCategory: PropertyCategory): boolean {
+    return this.selectedFilters[propertyCategory].has(jobProperty);
   }
 }

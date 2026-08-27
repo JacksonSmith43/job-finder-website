@@ -16,3 +16,8 @@ h3 {
   display: flex;
   gap: 1rem;
 }
+
+.reset-button {
+  float: right;
+  margin-top: 1rem;
+}
