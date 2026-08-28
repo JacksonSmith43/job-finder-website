@@ -1,14 +1,11 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
 import { MatAnchor } from '@angular/material/button';
 
 import { JobService } from '../shared/services/job.service';
-
-type PropertyCategory =
-  'positionLevel' | 'employmentType' | 'workMode' | 'salary' | 'city' | 'jobThemes';
-
-type SelectedFilters = Record<PropertyCategory, Set<string>>;
+import { LocalStorageService } from '../shared/services/local-storage.service';
+import { PropertyCategory, SelectedFilters } from '../shared/model/filters-jobs-type.model';
 
 @Component({
   selector: 'app-filter-panel',
@@ -17,8 +14,9 @@ type SelectedFilters = Record<PropertyCategory, Set<string>>;
   templateUrl: './filter-panel.component.html',
   styleUrl: './filter-panel.component.css',
 })
-export class FilterPanelComponent {
+export class FilterPanelComponent implements OnInit {
   jobService = inject(JobService);
+  localStorageService = inject(LocalStorageService);
 
   allJobs = this.jobService.allJobs;
   filteredJobs = this.jobService.filteredJobs;
@@ -31,6 +29,16 @@ export class FilterPanelComponent {
     city: new Set<string>(),
     jobThemes: new Set<string>(),
   };
+
+  ngOnInit(): void {
+    const savedFilters = this.localStorageService.getFromLocalStorage('filters');
+
+    if (savedFilters) {
+      this.selectedFilters = savedFilters;
+      const selectedProperties = this.applySelectedFilters();
+      this.jobService.determinesAvailableJobLength(selectedProperties, '');
+    }
+  }
 
   levelOptions = computed(() => {
     let levels = this.allJobs().map((l) => l.positionLevel);
@@ -79,11 +87,52 @@ export class FilterPanelComponent {
     const selectedCategory = this.selectedFilters[propertyCategorie];
     if (selectedCategory.has(jobProperty)) {
       selectedCategory.delete(jobProperty);
+      
     } else {
       selectedCategory.add(jobProperty);
     }
     console.log('onFilterJobs()_this.selectedFilters: ', this.selectedFilters);
+    console.log('onFilterJobs()_selectedCategory: ', selectedCategory);
 
+    this.localStorageService.saveToLocalStorage(this.selectedFilters, 'filters');
+
+    const selectedProperties = this.applySelectedFilters();
+    console.log('onFilterJobs()_this.filteredJobs(): ', this.filteredJobs());
+
+    this.jobService.determinesAvailableJobLength(selectedProperties, '');
+  }
+
+  // `Exclude<...>` means this helper cannot be called with `jobThemes`.
+  // Reason: `jobThemes` needs special array logic and is handled above.
+  private getComparableJobValue(
+    job: any,
+    category: Exclude<PropertyCategory, 'jobThemes'>,
+  ): string {
+    const value = job[category];
+    // `job[category]` is dynamic property access, e.g. job['city'] or job['workMode'].
+    // Returning a string gives us one consistent type for Set comparison.
+    return value === null || value === undefined ? '' : value.toString();
+  }
+
+  onResetFilters() {
+    console.log('onResetFilters().');
+    for (const selectedCategory of Object.values(this.selectedFilters)) {
+      console.log('onResetFilters()_selectedCategory: ', selectedCategory);
+
+      selectedCategory.clear();
+    }
+
+    const resetProperties = this.allJobs();
+    this.filteredJobs.set(resetProperties);
+    this.jobService.determinesAvailableJobLength(resetProperties, '');
+    this.localStorageService.saveToLocalStorage(this.selectedFilters, 'filters');
+  }
+
+  isSelected(jobProperty: string, propertyCategory: PropertyCategory): boolean {
+    return this.selectedFilters[propertyCategory].has(jobProperty);
+  }
+
+  private applySelectedFilters() {
     // OR inside each category, AND between categories.
     // Mental model: imagine one "bucket" (Set) per filter group.
     // A job must pass every non-empty bucket to stay in the result list.
@@ -116,37 +165,6 @@ export class FilterPanelComponent {
     });
 
     this.filteredJobs.set(selectedProperties);
-    console.log('onFilterJobs()_this.filteredJobs(): ', this.filteredJobs());
-
-    this.jobService.determinesAvailableJobLength(selectedProperties, '');
-  }
-
-  // `Exclude<...>` means this helper cannot be called with `jobThemes`.
-  // Reason: `jobThemes` needs special array logic and is handled above.
-  private getComparableJobValue(
-    job: any,
-    category: Exclude<PropertyCategory, 'jobThemes'>,
-  ): string {
-    const value = job[category];
-    // `job[category]` is dynamic property access, e.g. job['city'] or job['workMode'].
-    // Returning a string gives us one consistent type for Set comparison.
-    return value === null || value === undefined ? '' : value.toString();
-  }
-
-  onResetFilters() {
-    console.log('onResetFilters().');
-    for (const selectedCategory of Object.values(this.selectedFilters)) {
-      console.log('onResetFilters()_selectedCategory: ', selectedCategory);
-
-      selectedCategory.clear();
-    }
-
-    const resetProperties = this.allJobs();
-    this.filteredJobs.set(resetProperties);
-    this.jobService.determinesAvailableJobLength(resetProperties, '');
-  }
-
-  isSelected(jobProperty: string, propertyCategory: PropertyCategory): boolean {
-    return this.selectedFilters[propertyCategory].has(jobProperty);
+    return selectedProperties;
   }
 }
