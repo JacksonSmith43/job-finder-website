@@ -1,0 +1,91 @@
+<div class="filter-search-container">
+    <h3>Filter Jobs</h3>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Level</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(level of levelOptions(); track $index){
+            <div class="filter-search-item" (change)="onFilterJobs(level,'positionLevel')">
+                <!-- After Angular renders new after the reset, all checkboxes will be unchecked and will be false. The checkbox is bound to the isSelected() method which reflects the current selection state. -->
+                <input [id]="'level-' + $index" type="checkbox" [checked]="isSelected(level,'positionLevel')">
+                <label [for]="'level-' + $index">{{level}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Employment Type</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(type of employmentTypeOptions(); track $index){
+            <div class="filter-search-item" (change)="onFilterJobs(type,'employmentType')">
+                <input [id]="'type-' + $index" type="checkbox" [checked]="isSelected(type,'employmentType')">
+                <label [for]="'type-' + $index"> {{type}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Work Mode</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(mode of workModeOptions(); track $index){
+            <div class="filter-search-item" (change)="onFilterJobs(mode,'workMode')">
+                <input [id]="'mode-' + $index" type="checkbox" [checked]="isSelected(mode,'workMode')">
+                <label [for]="'mode-' + $index"> {{mode}}</label>
+            </div>
+            }
+        </div>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Salary</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(salary of salaryOptions(); track $index){
+            <div class="filter-search-item" (change)="onFilterJobs(salary.toString(),'salary')">
+                <input [id]="'salary-' + $index" type="checkbox" [checked]="isSelected(salary.toString(),'salary')">
+                <label [for]="'salary-' + $index"> {{salary}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Location</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(location of locationOptions(); track $index){
+            <div class="filter-search-item" (change)="onFilterJobs(location,'city')">
+                <input [id]="'location-' + $index" type="checkbox" [checked]="isSelected(location,'city')">
+                <label [for]="'location-' + $index"> {{location}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>Job Field</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="filter-search-options">
+            @for(field of jobFieldOptions(); track $index){
+            <div class="filter-search-item" (change)="onFilterJobs(field,'jobThemes')">
+                <input [id]="'field-' + $index" type="checkbox" [checked]="isSelected(field,'jobThemes')">
+                <label [for]="'field-' + $index"> {{field}}</label>
+            </div>
+            }
+        </div>
+    </mat-expansion-panel>
+
+    <button class="reset-button" type="button" matButton="filled" (click)="onResetFilters()">Reset Filter</button>
+</div>
