@@ -29,6 +29,8 @@ li {
 .position-company-name-image {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-left: 1.5rem;
 }
 
 .position-company-name {
@@ -44,12 +46,14 @@ li {
   margin-top: 0rem;
 }
 
-.job-info {
-  display: flex;
+.job-details {
+  width: 99%;
+  margin: 0rem auto;
 }
 
-.job-info-item {
-  height: 1%;
+.job-info {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .job-info p {
@@ -60,9 +64,13 @@ li {
   outline: 0.025rem solid gray;
   border-radius: 1rem;
 
-  height: 1%; /* The value does not appear to change anything. */
   margin-top: 1rem;
   padding: 0rem 1rem;
+}
+
+.application-button-container {
+  display: flex;
+  justify-content: center;
 }
 
 .job-summary {
@@ -167,4 +175,25 @@ li {
 
 .application-button:hover {
   background-color: rgb(7, 74, 141);
+}
+
+/* Smartphones (from 576px). */
+@media only screen and (max-width: 576px) {
+  .job-info {
+    display: grid;
+  }
+
+  .job-field {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .tech-stack-name-logo {
+    display: grid;
+  }
+
+  .tech-stack-button {
+    margin-bottom: 0.5rem;
+  }
 }
