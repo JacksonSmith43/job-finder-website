@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faTag,
@@ -27,6 +27,7 @@ export class JobDetailsComponent implements OnInit {
   jobService = inject(JobService);
   localStorageService = inject(LocalStorageService);
   route = inject(ActivatedRoute);
+  router = inject(Router);
 
   allJobs = this.jobService.allJobs;
   currentJob = this.jobService.currentJob;
@@ -89,7 +90,9 @@ export class JobDetailsComponent implements OnInit {
     this.jobService.filterTechStack(tech);
   }
 
-  onApply() {
+  onApply(id: number) {
     console.log('onApply().');
+    this.router.navigate(['application-page/' + id]);
+    this.localStorageService.saveToLocalStorage(this.currentJob(), 'applyForSelectedJob');
   }
 }

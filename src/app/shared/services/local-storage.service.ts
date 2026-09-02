@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { JobType } from '../model/job-type.model';
 import { SelectedFilters } from '../model/filters-jobs-type.model';
 
-type StorageKey = 'selectedJob' | 'filteredJobs' | 'filters';
+type StorageKey = 'selectedJob' | 'filteredJobs' | 'filters' | 'applyForSelectedJob';
 type SerialisedSelectedFilters = Record<keyof SelectedFilters, string[]>;
 
 @Injectable({ providedIn: 'root' })

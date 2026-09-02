@@ -13,7 +13,7 @@ export class JobService implements OnInit {
   filteredJobs = signal<JobType[]>([]);
   isVisible = signal<boolean>(false);
   searchAnnouncement = signal<string>('');
-  currentJob = signal<JobType | null>(null);
+  currentJob = signal<JobType>({} as JobType);
 
   readonly techStack: Record<string, string> = {
     Angular: 'angular.png',
