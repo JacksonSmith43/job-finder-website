@@ -1,134 +1,188 @@
 <main>
-    <div class="progress-bar">
-        <!-- TODO: Use Installation processes style for the progress bar. -->
-        <p>Personal details</p>
-        <p>Educational background</p>
-        <p>Job profile information</p>
-        <p>Documents</p>
-    </div>
-
     <h1>Job Application for {{currentJob().name}}</h1>
-    <section class="personal-information">
-        <label for="full-name">Full Name:</label>
-        <input id="full-name" type="text" placeholder="Morpheus Endless">
+
+    <div class="progress-bar">
+
+        <mat-stepper [linear]="isLinear()" #stepper>
+            <mat-step class="personal-information" [stepControl]="personalProfileFormGroup">
+                <form [formGroup]="personalProfileFormGroup">
+                    <ng-template matStepLabel>Personal details</ng-template>
+
+                    <mat-form-field>
+                        <mat-label for="full-name">Full Name:</mat-label>
+                        <input id="full-name" matInput placeholder="Morpheus Endless" formControlName="fullNameCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Choose your birthdate</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="birthdateCtrl">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <label for="gender">Gender:</label>
+                    <mat-radio-group aria-label="Select an option for your gender" formControlName="genderCtrl">
+                        <mat-radio-button value="male">Male</mat-radio-button>
+                        <mat-radio-button value="female">Female</mat-radio-button>
+                        <mat-radio-button value="rather-not-say">Rather not say</mat-radio-button>
+                    </mat-radio-group>
+                    @if (personalProfileFormGroup.controls.genderCtrl.invalid &&
+                    personalProfileFormGroup.controls.genderCtrl.touched) {
+                    <mat-error class="field-error">Gender orientation is required.</mat-error>
+                    }
+
+                    <mat-form-field>
+                        <mat-label for="phone-number">Phone number:</mat-label>
+                        <input id="phone-number" type="tel" matInput placeholder="012345678" formControlName="phoneNumberCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label for="email">Email:</mat-label>
+                        <input id="email" type="email" matInput placeholder="morpheus@gmx.at" formControlName="emailCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label for="address">Address:</mat-label>
+                        <input id="address" type="text" matInput placeholder="Unknownstreet 5" formControlName="addressCtrl">
+                    </mat-form-field>
+
+                    <div>
+                        <button matButton type="button" (click)="onNextStep(stepper)"
+                            title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step class="education-history" [stepControl]="educationFormGroup" label="Educational background">
+                <form [formGroup]="educationFormGroup">
+                    <h4>Highest degree:</h4>
+                    <mat-form-field class="highest degree">
+                        <mat-label>Highest degree:</mat-label>
+                        <select matNativeControl formControlName="highestDegreeCtrl">
+                            <option value="high-school-diploma">High School Diploma</option>
+                            <option value="some-college">Some College</option>
+                            <option value="associate-degree">Associate Degree</option>
+                            <option value="bachelor-degree">Bachelor's Degree</option>
+                            <option value="master-degree">Master's Degree</option>
+                            <option value="doctoral-degree">Doctoral Degree</option>
+                            <option value="professional-degree">Professional Degree</option>
+                            <option value="none-of-the-above">None of the above</option>
+                        </select>
+                    </mat-form-field>
+
+                    <h4>School/Institution:</h4>
+                    <mat-form-field class="school-institution">
+                        <mat-label>School/Institution:</mat-label>
+                        <select matNativeControl formControlName="schoolInstitutionCtrl">
+                            <option value="technikum-wien">Technikum Wien</option>
+                            <option value="hochschule-campus-wien">Hochschule Campus Wien</option>
+                            <option value="technische-universität-wien">Technische Universität Wien</option>
+                            <option value="medizinische-universität-wien">Medizinische Universität Wien</option>
+                            <option value="University-vienna">University Vienna</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </mat-form-field>
+
+                    <h4>Year completed:</h4>
+                    <div class="p-fluid p-grid p-formgrid">
+                        <div class="p-field p-col-12 p-md-4">
+                            <p-datepicker view="year" dateFormat="yy" [readonlyInput]="true" inputId="pickYear" placeholder="Pick a year"
+                                formControlName="yearCompletedCtrl">
+                            </p-datepicker>
+                            @if (educationFormGroup.controls.yearCompletedCtrl.invalid &&
+                            educationFormGroup.controls.yearCompletedCtrl.touched) {
+                            <mat-error class="field-error">Completion year is required.</mat-error>
+                            }
+                        </div>
+                    </div>
 
 
-        <mat-form-field>
-            <mat-label>Choose your birthdate</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-hint>DD/MM/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+                    <div>
+                        <button matButton matStepperPrevious type="button">Back</button>
+                        <button matButton type="button" (click)="onNextStep(stepper)"
+                            title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step class="employment-history" [stepControl]="jobFormGroup">
+                <form [formGroup]="jobFormGroup">
+                    <ng-template matStepLabel>Job profile information</ng-template>
 
+                    <h4>What is your current employment status</h4>
+                    <mat-radio-group aria-label="Select an option" formControlName="employmentStatusCtrl">
+                        <mat-radio-button value="employed">Employed</mat-radio-button>
+                        <mat-radio-button value="self-employed">Self-Employed</mat-radio-button>
+                        <mat-radio-button value="unemployed">Unemployed</mat-radio-button>
+                        <mat-radio-button value="student">Student</mat-radio-button>
+                        <mat-radio-button value="not-currently-listed">Not Currently Listed</mat-radio-button>
+                    </mat-radio-group>
 
-        <label for="gender">Gender:</label>
-        <mat-radio-group aria-label="Select an option for your gender">
-            <mat-radio-button value="male">Male</mat-radio-button>
-            <mat-radio-button value="female">Female</mat-radio-button>
-            <mat-radio-button value="rather-not-say">Rather not say</mat-radio-button>
-        </mat-radio-group>
+                    @if (jobFormGroup.controls.employmentStatusCtrl.invalid &&
+                    jobFormGroup.controls.employmentStatusCtrl.touched) {
+                    <mat-error class="field-error">Employment status is required.</mat-error>
+                    }
 
-        <label for="phone-number">Phone number:</label>
-        <input id="phone-number" type="tel" placeholder="012345678">
+                    <mat-form-field>
+                        <mat-label>Choose your available startdate</mat-label>
+                        <input matInput [matDatepicker]="startPicker" formControlName="availabletStartDateCtrl">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                    </mat-form-field>
 
-        <label for="email">Email:</label>
-        <input id="email" type="email" placeholder="morpheus@gmx.at">
+                    <h4>Years experience:</h4>
+                    <mat-form-field>
+                        <mat-label>Years experience:</mat-label>
+                        <select matNativeControl formControlName="experienceCtrl">
+                            <option value="zero-years">0 years.</option>
+                            <option value="one-to-two-years">1-2 years.</option>
+                            <option value="three-to-five-years">3-5 years.</option>
+                            <option value="five-to-fifteen-years">5-15 years.</option>
+                            <option value="fifteen-plus-years">15+ years.</option>
+                        </select>
+                    </mat-form-field>
 
-        <label for="address">Address:</label>
-        <input id="address" type="text" placeholder="Unknownstreet 5">
+                    <mat-form-field>
+                        <h4>Last employment</h4>
+                        <mat-label for="company-name">Company Name:</mat-label>
+                        <input id="company-name" type="text" matInput placeholder="Dodgycompany" formControlName="lastEmploymentCtrl">
+                    </mat-form-field>
 
-    </section>
+                    <mat-form-field>
+                        <mat-label for="position-held">Position Held:</mat-label>
+                        <input id="position-held" type="text" matInput placeholder="Pretentious level" formControlName="positionHeldCtrl">
+                    </mat-form-field>
 
-    <section class="education-history">
+                    <mat-form-field>
+                        <mat-label>Employment dates</mat-label>
+                        <mat-date-range-input [rangePicker]="datePicker">
+                            <input matStartDate placeholder="Start date" formControlName="startDate">
+                            <input matEndDate placeholder="End date" formControlName="endDate">
+                        </mat-date-range-input>
+                        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #datePicker></mat-date-range-picker>
+                    </mat-form-field>
 
-        <h4>Highest degree:</h4>
-        <mat-form-field class="highest degree">
-            <mat-label>Highest degree:</mat-label>
-            <select matNativeControl required>
-                <option value="high-school-diploma">High School Diploma</option>
-                <option value="some-college">Some College</option>
-                <option value="associate-degree">Associate Degree</option>
-                <option value="bachelor-degree">Bachelor's Degree</option>
-                <option value="master-degree">Master's Degree</option>
-                <option value="doctoral-degree">Doctoral Degree</option>
-                <option value="professional-degree">Professional Degree</option>
-                <option value="none-of-the-above">None of the above</option>
-            </select>
-        </mat-form-field>
+                </form>
+                <div>
+                    <button matButton matStepperPrevious type="button">Back</button>
+                    <button matButton type="button" (click)="onNextStep(stepper)"
+                        title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
+                </div>
+            </mat-step>
 
-        <h4>School/Institution:</h4>
-        <mat-form-field class="school-institution">
-            <mat-label>School/Institution:</mat-label>
-            <select matNativeControl required>
-                <option value="technikum-wien">Technikum Wien</option>
-                <option value="hochschule-campus-wien">Hochschule Campus Wien</option>
-                <option value="technische-universität-wien">Technische Universität Wien</option>
-                <option value="medizinische-universität-wien">Medizinische Universität Wien</option>
-                <option value="University-vienna">University Vienna</option>
-            </select>
-        </mat-form-field>
+            <mat-step class="documents" [stepControl]="documentsFormGroup">
+                <form [formGroup]="documentsFormGroup">
+                    <ng-template matStepLabel>Documents</ng-template>
+                    <h4>Upload documents</h4>
 
-        <h4>Year completed:</h4>
-        <div class="p-fluid p-grid p-formgrid">
-            <div class="p-field p-col-12 p-md-4">
-                <p-datepicker view="year" dateFormat="yy" [readonlyInput]="true" inputId="pickYear" placeholder="Pick a year">
-                </p-datepicker>
-            </div>
-        </div>
-    </section>
-
-    <section class="employment">
-
-        <h4>What is your current employment status</h4>
-        <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="employed">Employed</mat-radio-button>
-            <mat-radio-button value="self-employed">Self-Employed</mat-radio-button>
-            <mat-radio-button value="unemployed">Unemployed</mat-radio-button>
-            <mat-radio-button value="student">Student</mat-radio-button>
-        </mat-radio-group>
-
-        <mat-form-field>
-            <mat-label>Choose your available startdate</mat-label>
-            <input matInput [matDatepicker]="startPicker">
-            <mat-hint>DD/MM/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
-            <mat-datepicker #startPicker></mat-datepicker>
-        </mat-form-field>
-
-        <h4>Years experience:</h4>
-        <mat-form-field>
-            <mat-label>Years experience:</mat-label>
-            <select matNativeControl required>
-                <option value="zero-years">0 years.</option>
-                <option value="one-to-two-years">1-2 years.</option>
-                <option value="three-to-five-years">3-5 years.</option>
-                <option value="five-to-fifteen-years">5-15 years.</option>
-                <option value="fifteen-plus-years">15+ years.</option>
-            </select>
-        </mat-form-field>
-
-        <h4>Last employment</h4>
-        <label for="company-name">Company Name:</label>
-        <input id="company-name" type="text" placeholder="Dodgycompany">
-
-        <label for="position-held">Position Held:</label>
-        <input id="position-held" type="text" placeholder="Pretentious level">
-
-        <mat-form-field>
-            <mat-label>Employment dates</mat-label>
-            <mat-date-range-input [rangePicker]="datePicker">
-                <input matStartDate placeholder="Start date">
-                <input matEndDate placeholder="End date">
-            </mat-date-range-input>
-            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
-            <mat-date-range-picker #datePicker></mat-date-range-picker>
-        </mat-form-field>
-
-    </section>
-
-    <section class="documents">
-        <h4>Upload documents</h4>
-    </section>
+                    <div>
+                        <button matButton matStepperPrevious type="button">Back</button>
+                        <button matButton (click)="stepper.reset()">Reset</button>
+                    </div>
+                </form>
+            </mat-step>
+        </mat-stepper>
+    </div>
 </main>
