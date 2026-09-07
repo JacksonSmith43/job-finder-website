@@ -1,0 +1,15 @@
+form {
+  display: grid;
+}
+
+mat-form-field {
+  margin-top: 2rem;
+}
+
+button {
+  float: right;
+}
+
+label {
+  margin-top: 2rem;
+}

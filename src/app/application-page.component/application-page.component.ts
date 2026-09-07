@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DatePickerModule } from 'primeng/datepicker';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { MatButton } from '@angular/material/button';
 
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { JobService } from '../shared/services/job.service';
@@ -29,6 +30,7 @@ import { JobType } from '../shared/model/job-type.model';
     MatInputModule,
     MatStepperModule,
     ReactiveFormsModule,
+    MatButton,
   ],
   templateUrl: './application-page.component.html',
   styleUrl: './application-page.component.css',

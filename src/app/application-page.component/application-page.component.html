@@ -55,7 +55,7 @@
             </mat-step>
             <mat-step class="education-history" [stepControl]="educationFormGroup" label="Educational background">
                 <form [formGroup]="educationFormGroup">
-                    <h4>Highest degree:</h4>
+
                     <mat-form-field class="highest degree">
                         <mat-label>Highest degree:</mat-label>
                         <select matNativeControl formControlName="highestDegreeCtrl">
@@ -70,7 +70,6 @@
                         </select>
                     </mat-form-field>
 
-                    <h4>School/Institution:</h4>
                     <mat-form-field class="school-institution">
                         <mat-label>School/Institution:</mat-label>
                         <select matNativeControl formControlName="schoolInstitutionCtrl">
@@ -83,11 +82,11 @@
                         </select>
                     </mat-form-field>
 
-                    <h4>Year completed:</h4>
                     <div class="p-fluid p-grid p-formgrid">
+                        <label for="completion-date">Completion date:</label>
                         <div class="p-field p-col-12 p-md-4">
-                            <p-datepicker view="year" dateFormat="yy" [readonlyInput]="true" inputId="pickYear" placeholder="Pick a year"
-                                formControlName="yearCompletedCtrl">
+                            <p-datepicker id="completion-date" view="year" dateFormat="yy" [readonlyInput]="true" inputId="pickYear"
+                                placeholder="Pick a year" formControlName="yearCompletedCtrl">
                             </p-datepicker>
                             @if (educationFormGroup.controls.yearCompletedCtrl.invalid &&
                             educationFormGroup.controls.yearCompletedCtrl.touched) {
@@ -95,7 +94,6 @@
                             }
                         </div>
                     </div>
-
 
                     <div>
                         <button matButton matStepperPrevious type="button">Back</button>
@@ -108,7 +106,7 @@
                 <form [formGroup]="jobFormGroup">
                     <ng-template matStepLabel>Job profile information</ng-template>
 
-                    <h4>What is your current employment status</h4>
+                    <mat-label>What is your current employment status:</mat-label>
                     <mat-radio-group aria-label="Select an option" formControlName="employmentStatusCtrl">
                         <mat-radio-button value="employed">Employed</mat-radio-button>
                         <mat-radio-button value="self-employed">Self-Employed</mat-radio-button>
@@ -130,7 +128,6 @@
                         <mat-datepicker #startPicker></mat-datepicker>
                     </mat-form-field>
 
-                    <h4>Years experience:</h4>
                     <mat-form-field>
                         <mat-label>Years experience:</mat-label>
                         <select matNativeControl formControlName="experienceCtrl">
@@ -143,7 +140,6 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <h4>Last employment</h4>
                         <mat-label for="company-name">Company Name:</mat-label>
                         <input id="company-name" type="text" matInput placeholder="Dodgycompany" formControlName="lastEmploymentCtrl">
                     </mat-form-field>
