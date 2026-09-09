@@ -9,12 +9,13 @@
                     <ng-template matStepLabel>Personal details</ng-template>
 
                     <mat-form-field>
-                        <mat-label for="full-name">Full Name:</mat-label>
+                        <mat-label for="full-name" [class]="hasFieldError(personalProfileFormGroup, 'fullNameCtrl')">Full
+                            Name:</mat-label>
                         <input id="full-name" matInput placeholder="Morpheus Endless" formControlName="fullNameCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label>Choose your birthdate</mat-label>
+                        <mat-label [class]="hasFieldError(personalProfileFormGroup, 'birthdateCtrl')">Choose your birthdate</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="birthdateCtrl">
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -33,22 +34,23 @@
                     }
 
                     <mat-form-field>
-                        <mat-label for="phone-number">Phone number:</mat-label>
+                        <mat-label for="phone-number" [class]="hasFieldError(personalProfileFormGroup, 'phoneNumberCtrl')">Phone
+                            number:</mat-label>
                         <input id="phone-number" type="tel" matInput placeholder="012345678" formControlName="phoneNumberCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label for="email">Email:</mat-label>
+                        <mat-label for="email" [class]="hasFieldError(personalProfileFormGroup, 'emailCtrl')">Email:</mat-label>
                         <input id="email" type="email" matInput placeholder="morpheus@gmx.at" formControlName="emailCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label for="address">Address:</mat-label>
+                        <mat-label for="address" [class]="hasFieldError(personalProfileFormGroup, 'addressCtrl')">Address:</mat-label>
                         <input id="address" type="text" matInput placeholder="Unknownstreet 5" formControlName="addressCtrl">
                     </mat-form-field>
 
                     <div>
-                        <button matButton type="button" (click)="onNextStep(stepper)"
+                        <button matButton="outlined" type="button" (click)="onNextStep(stepper)"
                             title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
                     </div>
                 </form>
@@ -57,7 +59,7 @@
                 <form [formGroup]="educationFormGroup">
 
                     <mat-form-field class="highest degree">
-                        <mat-label>Highest degree:</mat-label>
+                        <mat-label [class]="hasFieldError(educationFormGroup, 'highestDegreeCtrl')">Highest degree:</mat-label>
                         <select matNativeControl formControlName="highestDegreeCtrl">
                             <option value="high-school-diploma">High School Diploma</option>
                             <option value="some-college">Some College</option>
@@ -71,7 +73,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="school-institution">
-                        <mat-label>School/Institution:</mat-label>
+                        <mat-label [class]="hasFieldError(educationFormGroup, 'schoolInstitutionCtrl')">School/Institution:</mat-label>
                         <select matNativeControl formControlName="schoolInstitutionCtrl">
                             <option value="technikum-wien">Technikum Wien</option>
                             <option value="hochschule-campus-wien">Hochschule Campus Wien</option>
@@ -83,7 +85,8 @@
                     </mat-form-field>
 
                     <div class="p-fluid p-grid p-formgrid">
-                        <label for="completion-date">Completion date:</label>
+                        <label for="completion-date">Completion
+                            date:</label>
                         <div class="p-field p-col-12 p-md-4">
                             <p-datepicker id="completion-date" view="year" dateFormat="yy" [readonlyInput]="true" inputId="pickYear"
                                 placeholder="Pick a year" formControlName="yearCompletedCtrl">
@@ -96,9 +99,9 @@
                     </div>
 
                     <div>
-                        <button matButton matStepperPrevious type="button">Back</button>
-                        <button matButton type="button" (click)="onNextStep(stepper)"
+                        <button matButton="outlined" type="button" (click)="onNextStep(stepper)"
                             title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
+                        <button matButton="outlined" matStepperPrevious type="button">Back</button>
                     </div>
                 </form>
             </mat-step>
@@ -106,7 +109,8 @@
                 <form [formGroup]="jobFormGroup">
                     <ng-template matStepLabel>Job profile information</ng-template>
 
-                    <mat-label>What is your current employment status:</mat-label>
+                    <mat-label>What is your current employment
+                        status:</mat-label>
                     <mat-radio-group aria-label="Select an option" formControlName="employmentStatusCtrl">
                         <mat-radio-button value="employed">Employed</mat-radio-button>
                         <mat-radio-button value="self-employed">Self-Employed</mat-radio-button>
@@ -121,7 +125,8 @@
                     }
 
                     <mat-form-field>
-                        <mat-label>Choose your available startdate</mat-label>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'availabletStartDateCtrl')">Choose your available
+                            startdate</mat-label>
                         <input matInput [matDatepicker]="startPicker" formControlName="availabletStartDateCtrl">
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
@@ -129,7 +134,7 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label>Years experience:</mat-label>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'experienceCtrl')">Years experience:</mat-label>
                         <select matNativeControl formControlName="experienceCtrl">
                             <option value="zero-years">0 years.</option>
                             <option value="one-to-two-years">1-2 years.</option>
@@ -140,17 +145,18 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label for="company-name">Company Name:</mat-label>
+                        <mat-label for="company-name" [class]="hasFieldError(jobFormGroup, 'lastEmploymentCtrl')">Company Name:</mat-label>
                         <input id="company-name" type="text" matInput placeholder="Dodgycompany" formControlName="lastEmploymentCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label for="position-held">Position Held:</mat-label>
+                        <mat-label for="position-held" [class]="hasFieldError(jobFormGroup, 'positionHeldCtrl')">Position Held:</mat-label>
                         <input id="position-held" type="text" matInput placeholder="Pretentious level" formControlName="positionHeldCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label>Employment dates</mat-label>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'startDate') || hasFieldError(jobFormGroup, 'endDate')">Employment
+                            dates</mat-label>
                         <mat-date-range-input [rangePicker]="datePicker">
                             <input matStartDate placeholder="Start date" formControlName="startDate">
                             <input matEndDate placeholder="End date" formControlName="endDate">
@@ -162,9 +168,9 @@
 
                 </form>
                 <div>
-                    <button matButton matStepperPrevious type="button">Back</button>
-                    <button matButton type="button" (click)="onNextStep(stepper)"
+                    <button matButton="outlined" type="button" (click)="onNextStep(stepper)"
                         title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
+                    <button matButton="outlined" matStepperPrevious type="button">Back</button>
                 </div>
             </mat-step>
 
@@ -174,8 +180,8 @@
                     <h4>Upload documents</h4>
 
                     <div>
-                        <button matButton matStepperPrevious type="button">Back</button>
-                        <button matButton (click)="stepper.reset()">Reset</button>
+                        <button matButton="outlined" (click)="stepper.reset()">Reset</button>
+                        <button matButton="outlined" matStepperPrevious type="button">Back</button>
                     </div>
                 </form>
             </mat-step>

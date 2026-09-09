@@ -106,4 +106,11 @@ export class ApplicationPageComponent implements OnInit {
 
     stepper.next();
   }
+
+  hasFieldError(formGroup: FormGroup, controlName: string) {
+    console.log('hasFieldError().');
+
+    const control = formGroup.get(controlName);
+    return control && control.invalid && control.touched ? 'field-error' : '';
+  }
 }

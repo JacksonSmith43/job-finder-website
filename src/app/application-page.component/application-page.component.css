@@ -1,3 +1,12 @@
+* {
+  font-family: sans-serif;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
 form {
   display: grid;
 }
@@ -12,4 +21,20 @@ button {
 
 label {
   margin-top: 2rem;
+}
+
+option {
+  background-color: black;
+}
+
+.field-error {
+  color: rgb(168, 1, 1);
+}
+
+mat-label {
+  color: white;
+}
+
+div button:first-child {
+  margin-left: 1rem;
 }
