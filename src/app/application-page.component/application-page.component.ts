@@ -44,6 +44,35 @@ export class ApplicationPageComponent implements OnInit {
 
   currentJob = this.jobService.currentJob;
 
+  employment = {
+    status: '',
+    common: {
+      // availableStartDate: '',
+      experience: '',
+    },
+    student: {
+      nameOfStudy: '',
+      currentSemester: '',
+      graduationDate: '',
+    },
+    employed: {
+      companyName: '',
+      positionHeld: '',
+      startDate: '',
+      endDate: '',
+    },
+    selfEmployed: {
+      projectType: '',
+      longTermProject: '',
+    },
+    unemployed: {
+      recentRole: '',
+    },
+    notCurrentlyListed: {
+      otherRole: '',
+    },
+  };
+
   personalProfileFormGroup = this._formBuilder.group({
     // Ctrl stands for Control.
     fullNameCtrl: ['', Validators.required],
@@ -61,13 +90,31 @@ export class ApplicationPageComponent implements OnInit {
   });
 
   jobFormGroup = this._formBuilder.group({
+    // Common.
     employmentStatusCtrl: ['', Validators.required],
-    availabletStartDateCtrl: ['', Validators.required],
+    availableStartDateCtrl: ['', Validators.required],
     experienceCtrl: ['', Validators.required],
-    lastEmploymentCtrl: ['', Validators.required],
-    positionHeldCtrl: ['', Validators.required],
-    startDate: ['', Validators.required],
-    endDate: ['', Validators.required],
+
+    // Student.
+    nameOfStudyCtrl: [''],
+    currentSemesterCtrl: [''],
+    graduationDateCtrl: [''],
+
+    // Employed.
+    companyNameCtrl: [''],
+    positionHeldCtrl: [''],
+    startEmploymentDateCtrl: [''],
+    endEmploymentDateCtrl: [''],
+
+    // Self-Employed.
+    projectTypeCtrl: [''],
+    longTermProjectCtrl: [''],
+
+    // Unemployed.
+    recentRoleCtrl: [''],
+
+    // Not currently listed.
+    otherRoleCtrl: [''],
   });
 
   documentsFormGroup = this._formBuilder.group({
@@ -79,23 +126,16 @@ export class ApplicationPageComponent implements OnInit {
 
     let applySelectedJob = this.localStorageService.getFromLocalStorage('applyForSelectedJob');
     this.currentJob.set(applySelectedJob as JobType);
+
+    this.jobFormGroup
+      .get('employmentStatusCtrl')
+      ?.valueChanges.subscribe(() => this.applyEmploymentValidators());
+    this.applyEmploymentValidators();
   }
 
-  get stepForms(): FormGroup[] {
-    return [
-      this.personalProfileFormGroup,
-      this.educationFormGroup,
-      this.jobFormGroup,
-      this.documentsFormGroup,
-    ] as FormGroup[];
-  }
-
-  onNextStep(stepper: MatStepper): void {
+  onNextStep(stepper: MatStepper, currentForm: FormGroup): void {
     console.log('onStepper().');
 
-    let currentIndex = stepper.selectedIndex;
-    let currentForm = this.stepForms[currentIndex];
-    console.log('onStepper()_selectedStep: ', currentIndex);
     console.log('onStepper()_currentForm: ', currentForm);
 
     currentForm.markAllAsTouched();
@@ -105,6 +145,73 @@ export class ApplicationPageComponent implements OnInit {
     }
 
     stepper.next();
+  }
+
+  applyEmploymentValidators() {
+    console.log('applyEmploymentValidators().');
+    const employmentStatus = this.jobFormGroup.get('employmentStatusCtrl')?.value;
+
+    if (employmentStatus === 'student') {
+      this.jobFormGroup.get('nameOfStudyCtrl')?.setValidators([Validators.required]);
+      this.jobFormGroup.get('currentSemesterCtrl')?.setValidators([Validators.required]);
+      this.jobFormGroup.get('graduationDateCtrl')?.setValidators([Validators.required]);
+    } else {
+      this.jobFormGroup.get('nameOfStudyCtrl')?.clearValidators();
+      this.jobFormGroup.get('currentSemesterCtrl')?.clearValidators();
+      this.jobFormGroup.get('graduationDateCtrl')?.clearValidators();
+    }
+
+    if (employmentStatus === 'employed') {
+      this.jobFormGroup.get('companyNameCtrl')?.setValidators([Validators.required]);
+      this.jobFormGroup.get('positionHeldCtrl')?.setValidators([Validators.required]);
+      this.jobFormGroup.get('startEmploymentDateCtrl')?.setValidators([Validators.required]);
+      this.jobFormGroup.get('endEmploymentDateCtrl')?.setValidators([Validators.required]);
+    } else {
+      this.jobFormGroup.get('companyNameCtrl')?.clearValidators();
+      this.jobFormGroup.get('positionHeldCtrl')?.clearValidators();
+      this.jobFormGroup.get('startEmploymentDateCtrl')?.clearValidators();
+      this.jobFormGroup.get('endEmploymentDateCtrl')?.clearValidators();
+    }
+
+    if (employmentStatus === 'selfEmployed') {
+      this.jobFormGroup.get('projectTypeCtrl')?.setValidators([Validators.required]);
+      this.jobFormGroup.get('longTermProjectCtrl')?.setValidators([Validators.required]);
+    } else {
+      this.jobFormGroup.get('projectTypeCtrl')?.clearValidators();
+      this.jobFormGroup.get('longTermProjectCtrl')?.clearValidators();
+    }
+
+    if (employmentStatus === 'unemployed') {
+      this.jobFormGroup.get('recentRoleCtrl')?.setValidators([Validators.required]);
+    } else {
+      this.jobFormGroup.get('recentRoleCtrl')?.clearValidators();
+    }
+
+    if (employmentStatus === 'notCurrentlyListed') {
+      this.jobFormGroup.get('otherRoleCtrl')?.setValidators([Validators.required]);
+    } else {
+      this.jobFormGroup.get('otherRoleCtrl')?.clearValidators();
+    }
+
+    const conditionalControls = [
+      'nameOfStudyCtrl',
+      'currentSemesterCtrl',
+      'graduationDateCtrl',
+      'companyNameCtrl',
+      'positionHeldCtrl',
+      'startEmploymentDateCtrl',
+      'endEmploymentDateCtrl',
+      'projectTypeCtrl',
+      'longTermProjectCtrl',
+      'recentRoleCtrl',
+      'otherRoleCtrl',
+    ];
+
+    conditionalControls.forEach((controlName) => {
+      this.jobFormGroup.get(controlName)?.updateValueAndValidity({ emitEvent: false });
+    });
+
+    this.jobFormGroup.updateValueAndValidity({ emitEvent: false });
   }
 
   hasFieldError(formGroup: FormGroup, controlName: string) {

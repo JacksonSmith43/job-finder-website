@@ -50,7 +50,7 @@
                     </mat-form-field>
 
                     <div>
-                        <button matButton="outlined" type="button" (click)="onNextStep(stepper)"
+                        <button matButton="outlined" type="button" (click)="onNextStep(stepper, personalProfileFormGroup)"
                             title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
                     </div>
                 </form>
@@ -58,7 +58,7 @@
             <mat-step class="education-history" [stepControl]="educationFormGroup" label="Educational background">
                 <form [formGroup]="educationFormGroup">
 
-                    <mat-form-field class="highest degree">
+                    <mat-form-field class="highest-degree">
                         <mat-label [class]="hasFieldError(educationFormGroup, 'highestDegreeCtrl')">Highest degree:</mat-label>
                         <select matNativeControl formControlName="highestDegreeCtrl">
                             <option value="high-school-diploma">High School Diploma</option>
@@ -72,6 +72,7 @@
                         </select>
                     </mat-form-field>
 
+
                     <mat-form-field class="school-institution">
                         <mat-label [class]="hasFieldError(educationFormGroup, 'schoolInstitutionCtrl')">School/Institution:</mat-label>
                         <select matNativeControl formControlName="schoolInstitutionCtrl">
@@ -83,6 +84,7 @@
                             <option value="other">Other</option>
                         </select>
                     </mat-form-field>
+
 
                     <div class="p-fluid p-grid p-formgrid">
                         <label for="completion-date">Completion
@@ -99,7 +101,7 @@
                     </div>
 
                     <div>
-                        <button matButton="outlined" type="button" (click)="onNextStep(stepper)"
+                        <button matButton="outlined" type="button" (click)="onNextStep(stepper, educationFormGroup)"
                             title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
                         <button matButton="outlined" matStepperPrevious type="button">Back</button>
                     </div>
@@ -109,14 +111,13 @@
                 <form [formGroup]="jobFormGroup">
                     <ng-template matStepLabel>Job profile information</ng-template>
 
-                    <mat-label>What is your current employment
-                        status:</mat-label>
+                    <mat-label>What is your current employment status:</mat-label>
                     <mat-radio-group aria-label="Select an option" formControlName="employmentStatusCtrl">
-                        <mat-radio-button value="employed">Employed</mat-radio-button>
-                        <mat-radio-button value="self-employed">Self-Employed</mat-radio-button>
-                        <mat-radio-button value="unemployed">Unemployed</mat-radio-button>
                         <mat-radio-button value="student">Student</mat-radio-button>
-                        <mat-radio-button value="not-currently-listed">Not Currently Listed</mat-radio-button>
+                        <mat-radio-button value="employed">Employed</mat-radio-button>
+                        <mat-radio-button value="selfEmployed">Self-Employed</mat-radio-button>
+                        <mat-radio-button value="unemployed">Unemployed</mat-radio-button>
+                        <mat-radio-button value="notCurrentlyListed">Not Currently Listed</mat-radio-button>
                     </mat-radio-group>
 
                     @if (jobFormGroup.controls.employmentStatusCtrl.invalid &&
@@ -124,17 +125,93 @@
                     <mat-error class="field-error">Employment status is required.</mat-error>
                     }
 
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "student"){
                     <mat-form-field>
-                        <mat-label [class]="hasFieldError(jobFormGroup, 'availabletStartDateCtrl')">Choose your available
+                        <mat-label for="name-of-study" [class]="hasFieldError(jobFormGroup, 'nameOfStudyCtrl')">Name of study</mat-label>
+                        <input id="name-of-study" type="text" matInput placeholder="Smart Homes And Assistive Technologies"
+                            formControlName="nameOfStudyCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label for="current-semester" [class]="hasFieldError(jobFormGroup, 'currentSemesterCtrl')">Current
+                            Semester</mat-label>
+                        <input id="current-semester" type="number" matInput placeholder="6" formControlName="currentSemesterCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'graduationDateCtrl')">Graduation date</mat-label>
+                        <input matInput [matDatepicker]="graduationPicker" formControlName="graduationDateCtrl">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="graduationPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #graduationPicker></mat-datepicker>
+                    </mat-form-field>
+                    }
+
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "employed"){
+                    <mat-form-field>
+                        <mat-label for="company-name" [class]="hasFieldError(jobFormGroup, 'companyNameCtrl')">Company Name</mat-label>
+                        <input id="company-name" type="text" matInput placeholder="Dodgycompany" formControlName="companyNameCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label for="position-held" [class]="hasFieldError(jobFormGroup, 'positionHeldCtrl')">Position Held</mat-label>
+                        <input id="position-held" type="text" matInput placeholder="Pretentious level" formControlName="positionHeldCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label
+                            [class]="hasFieldError(jobFormGroup, 'startEmploymentDateCtrl') || hasFieldError(jobFormGroup, 'endEmploymentDateCtrl')">Employment
+                            dates</mat-label>
+                        <mat-date-range-input [rangePicker]="datePicker">
+                            <input matStartDate placeholder="Start date" formControlName="startEmploymentDateCtrl">
+                            <input matEndDate placeholder="End date" formControlName="endEmploymentDateCtrl">
+                        </mat-date-range-input>
+                        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #datePicker></mat-date-range-picker>
+                    </mat-form-field>
+                    }
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "selfEmployed"){
+                    <mat-form-field>
+                        <mat-label for="project-type" [class]="hasFieldError(jobFormGroup, 'projectTypeCtrl')">Project Type</mat-label>
+                        <input id="project-type" type="text" matInput placeholder="Software Development" formControlName="projectTypeCtrl">
+                    </mat-form-field>
+
+                    <mat-label>Available for long term projects</mat-label>
+                    <mat-radio-group aria-label="Select an option" formControlName="longTermProjectCtrl">
+                        <mat-radio-button value="yes">Yes</mat-radio-button>
+                        <mat-radio-button value="no">No</mat-radio-button>
+                    </mat-radio-group>
+                    }
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "unemployed"){
+                    <mat-form-field>
+                        <mat-label for="recent-role" [class]="hasFieldError(jobFormGroup, 'recentRoleCtrl')">Recent Role</mat-label>
+                        <input id="recent-role" type="text" matInput placeholder="Frontend Engineer" formControlName="recentRoleCtrl">
+                    </mat-form-field>
+                    }
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "notCurrentlyListed"){
+                    <mat-form-field>
+                        <mat-label for="other-role" [class]="hasFieldError(jobFormGroup, 'otherRoleCtrl')">Other Role</mat-label>
+                        <input id="other-role" type="text" matInput placeholder="Freelancer" formControlName="otherRoleCtrl">
+                    </mat-form-field>
+                    }
+
+                    <mat-form-field>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'availableStartDateCtrl')">Choose your available
                             startdate</mat-label>
-                        <input matInput [matDatepicker]="startPicker" formControlName="availabletStartDateCtrl">
+                        <input matInput [matDatepicker]="startPicker" formControlName="availableStartDateCtrl">
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
                         <mat-datepicker #startPicker></mat-datepicker>
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label [class]="hasFieldError(jobFormGroup, 'experienceCtrl')">Years experience:</mat-label>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'experienceCtrl')">Years experience in the field that you are
+                            applying to</mat-label>
                         <select matNativeControl formControlName="experienceCtrl">
                             <option value="zero-years">0 years.</option>
                             <option value="one-to-two-years">1-2 years.</option>
@@ -144,31 +221,9 @@
                         </select>
                     </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label for="company-name" [class]="hasFieldError(jobFormGroup, 'lastEmploymentCtrl')">Company Name:</mat-label>
-                        <input id="company-name" type="text" matInput placeholder="Dodgycompany" formControlName="lastEmploymentCtrl">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label for="position-held" [class]="hasFieldError(jobFormGroup, 'positionHeldCtrl')">Position Held:</mat-label>
-                        <input id="position-held" type="text" matInput placeholder="Pretentious level" formControlName="positionHeldCtrl">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label [class]="hasFieldError(jobFormGroup, 'startDate') || hasFieldError(jobFormGroup, 'endDate')">Employment
-                            dates</mat-label>
-                        <mat-date-range-input [rangePicker]="datePicker">
-                            <input matStartDate placeholder="Start date" formControlName="startDate">
-                            <input matEndDate placeholder="End date" formControlName="endDate">
-                        </mat-date-range-input>
-                        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
-                        <mat-date-range-picker #datePicker></mat-date-range-picker>
-                    </mat-form-field>
-
                 </form>
                 <div>
-                    <button matButton="outlined" type="button" (click)="onNextStep(stepper)"
+                    <button matButton="outlined" type="button" (click)="onNextStep(stepper, jobFormGroup)"
                         title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
                     <button matButton="outlined" matStepperPrevious type="button">Back</button>
                 </div>

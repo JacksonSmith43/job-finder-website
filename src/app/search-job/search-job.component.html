@@ -9,7 +9,7 @@
 
         <form class="form-field-container" (ngSubmit)="onSubmit(enteredInput)" [formGroup]="form">
             <input type="text" placeholder="Tech Stack, Job, City" aria-label="Search field." aria-describedby="error-message"
-                title="Enter a tech stack, like Angular, location or a job title." formControlName="userInput" #enteredInput>
+                title="Enter a tech stack, like Angular, location or a job title." formControlName="userInput" #enteredInput autofocus>
             <button class="search-button" type="submit" matButton="filled">Search</button>
         </form>
 
