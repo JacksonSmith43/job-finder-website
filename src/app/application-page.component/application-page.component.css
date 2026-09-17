@@ -35,6 +35,18 @@ mat-label {
   color: white;
 }
 
+.radio-field {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 0.1rem solid transparent;
+  border-radius: 0.4rem;
+}
+
 div button:first-child {
   margin-left: 1rem;
+}
+
+button:focus,
+.radio-field:focus-within {
+  outline: 0.25rem solid red;
 }

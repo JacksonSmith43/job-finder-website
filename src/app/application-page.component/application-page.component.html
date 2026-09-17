@@ -16,18 +16,22 @@
 
                     <mat-form-field>
                         <mat-label [class]="hasFieldError(personalProfileFormGroup, 'birthdateCtrl')">Choose your birthdate</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="birthdateCtrl">
+                        <input matInput [matDatepicker]="picker" formControlName="birthdateCtrl" (focus)="picker.open()"
+                            (click)="picker.open()">
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
 
                     <label for="gender">Gender:</label>
-                    <mat-radio-group aria-label="Select an option for your gender" formControlName="genderCtrl">
-                        <mat-radio-button value="male">Male</mat-radio-button>
-                        <mat-radio-button value="female">Female</mat-radio-button>
-                        <mat-radio-button value="rather-not-say">Rather not say</mat-radio-button>
-                    </mat-radio-group>
+                    <div class="radio-field"
+                        [class.radio-field-invalid]="personalProfileFormGroup.controls.genderCtrl.invalid && personalProfileFormGroup.controls.genderCtrl.touched">
+                        <mat-radio-group aria-label="Select an option for your gender" formControlName="genderCtrl">
+                            <mat-radio-button value="male">Male</mat-radio-button>
+                            <mat-radio-button value="female">Female</mat-radio-button>
+                            <mat-radio-button value="rather-not-say">Rather not say</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
                     @if (personalProfileFormGroup.controls.genderCtrl.invalid &&
                     personalProfileFormGroup.controls.genderCtrl.touched) {
                     <mat-error class="field-error">Gender orientation is required.</mat-error>
@@ -90,8 +94,8 @@
                         <label for="completion-date">Completion
                             date:</label>
                         <div class="p-field p-col-12 p-md-4">
-                            <p-datepicker id="completion-date" view="year" dateFormat="yy" [readonlyInput]="true" inputId="pickYear"
-                                placeholder="Pick a year" formControlName="yearCompletedCtrl">
+                            <p-datepicker id="completion-date" inputId="completion-date" view="year" dateFormat="yy"
+                                placeholder="Pick a year" formControlName="yearCompletedCtrl" [readonlyInput]="false" [showOnFocus]="true">
                             </p-datepicker>
                             @if (educationFormGroup.controls.yearCompletedCtrl.invalid &&
                             educationFormGroup.controls.yearCompletedCtrl.touched) {
@@ -112,13 +116,16 @@
                     <ng-template matStepLabel>Job profile information</ng-template>
 
                     <mat-label>What is your current employment status:</mat-label>
-                    <mat-radio-group aria-label="Select an option" formControlName="employmentStatusCtrl">
-                        <mat-radio-button value="student">Student</mat-radio-button>
-                        <mat-radio-button value="employed">Employed</mat-radio-button>
-                        <mat-radio-button value="selfEmployed">Self-Employed</mat-radio-button>
-                        <mat-radio-button value="unemployed">Unemployed</mat-radio-button>
-                        <mat-radio-button value="notCurrentlyListed">Not Currently Listed</mat-radio-button>
-                    </mat-radio-group>
+                    <div class="radio-field"
+                        [class.radio-field-invalid]="jobFormGroup.controls.employmentStatusCtrl.invalid && jobFormGroup.controls.employmentStatusCtrl.touched">
+                        <mat-radio-group aria-label="Select an option" formControlName="employmentStatusCtrl">
+                            <mat-radio-button value="student">Student</mat-radio-button>
+                            <mat-radio-button value="employed">Employed</mat-radio-button>
+                            <mat-radio-button value="selfEmployed">Self-Employed</mat-radio-button>
+                            <mat-radio-button value="unemployed">Unemployed</mat-radio-button>
+                            <mat-radio-button value="notCurrentlyListed">Not Currently Listed</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
 
                     @if (jobFormGroup.controls.employmentStatusCtrl.invalid &&
                     jobFormGroup.controls.employmentStatusCtrl.touched) {
@@ -140,7 +147,8 @@
 
                     <mat-form-field>
                         <mat-label [class]="hasFieldError(jobFormGroup, 'graduationDateCtrl')">Graduation date</mat-label>
-                        <input matInput [matDatepicker]="graduationPicker" formControlName="graduationDateCtrl">
+                        <input matInput [matDatepicker]="graduationPicker" formControlName="graduationDateCtrl"
+                            (focus)="graduationPicker.open()" (click)="graduationPicker.open()">
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="graduationPicker"></mat-datepicker-toggle>
                         <mat-datepicker #graduationPicker></mat-datepicker>
@@ -164,8 +172,10 @@
                             [class]="hasFieldError(jobFormGroup, 'startEmploymentDateCtrl') || hasFieldError(jobFormGroup, 'endEmploymentDateCtrl')">Employment
                             dates</mat-label>
                         <mat-date-range-input [rangePicker]="datePicker">
-                            <input matStartDate placeholder="Start date" formControlName="startEmploymentDateCtrl">
-                            <input matEndDate placeholder="End date" formControlName="endEmploymentDateCtrl">
+                            <input matStartDate placeholder="Start date" formControlName="startEmploymentDateCtrl"
+                                (focus)="datePicker.open()" (click)="datePicker.open()">
+                            <input matEndDate placeholder="End date" formControlName="endEmploymentDateCtrl" (focus)="datePicker.open()"
+                                (click)="datePicker.open()">
                         </mat-date-range-input>
                         <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
@@ -180,10 +190,13 @@
                     </mat-form-field>
 
                     <mat-label>Available for long term projects</mat-label>
-                    <mat-radio-group aria-label="Select an option" formControlName="longTermProjectCtrl">
-                        <mat-radio-button value="yes">Yes</mat-radio-button>
-                        <mat-radio-button value="no">No</mat-radio-button>
-                    </mat-radio-group>
+                    <div class="radio-field"
+                        [class.radio-field-invalid]="jobFormGroup.controls.longTermProjectCtrl.invalid && jobFormGroup.controls.longTermProjectCtrl.touched">
+                        <mat-radio-group aria-label="Select an option" formControlName="longTermProjectCtrl">
+                            <mat-radio-button value="yes">Yes</mat-radio-button>
+                            <mat-radio-button value="no">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
                     }
 
                     @if(jobFormGroup.controls.employmentStatusCtrl.value === "unemployed"){
@@ -203,7 +216,8 @@
                     <mat-form-field>
                         <mat-label [class]="hasFieldError(jobFormGroup, 'availableStartDateCtrl')">Choose your available
                             startdate</mat-label>
-                        <input matInput [matDatepicker]="startPicker" formControlName="availableStartDateCtrl">
+                        <input matInput [matDatepicker]="startPicker" formControlName="availableStartDateCtrl" (focus)="startPicker.open()"
+                            (click)="startPicker.open()">
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
                         <mat-datepicker #startPicker></mat-datepicker>
