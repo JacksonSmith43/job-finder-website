@@ -3,7 +3,7 @@
 
     <div class="progress-bar">
 
-        <mat-stepper [linear]="isLinear()" #stepper>
+        <mat-stepper [linear]="isLinear()" [orientation]="stepperOrientation()" #stepper>
             <mat-step class="personal-information" [stepControl]="personalProfileFormGroup">
                 <form [formGroup]="personalProfileFormGroup">
                     <ng-template matStepLabel>Personal details</ng-template>

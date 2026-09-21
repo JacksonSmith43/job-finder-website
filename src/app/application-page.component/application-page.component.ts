@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -41,6 +41,8 @@ export class ApplicationPageComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
 
   isLinear = signal(true); // This is always true so that one can never click through the stepper bar (personal details, documents), without other logic allowing it (when the form has successfully been filled out).
+  stepperOrientation = signal<'horizontal' | 'vertical'>('horizontal');
+  private mobileBreakpoint = 768;
 
   currentJob = this.jobService.currentJob;
 
@@ -133,6 +135,18 @@ export class ApplicationPageComponent implements OnInit {
       .get('employmentStatusCtrl')
       ?.valueChanges.subscribe(() => this.applyEmploymentValidators());
     this.applyEmploymentValidators();
+    this.updateStepperOrientation();
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.updateStepperOrientation();
+  }
+
+  private updateStepperOrientation(): void {
+    this.stepperOrientation.set(
+      window.innerWidth <= this.mobileBreakpoint ? 'vertical' : 'horizontal',
+    );
   }
 
   onNextStep(stepper: MatStepper, currentForm: FormGroup): void {
