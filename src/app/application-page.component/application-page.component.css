@@ -1,9 +1,18 @@
-* {
+:host {
   font-family: sans-serif;
+}
+
+mat-icon {
+  font-family: 'Material Icons';
 }
 
 h1 {
   text-align: center;
+}
+
+h4 {
+  display: flex;
+  justify-content: center;
 }
 
 form {
@@ -44,6 +53,27 @@ mat-label {
   padding: 0.6rem 0.75rem;
   border: 0.1rem solid transparent;
   border-radius: 0.4rem;
+}
+
+.file-upload-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  outline: 0.25rem dotted blue;
+
+  width: 50%;
+  margin: 0rem auto;
+  padding: 1rem 1rem;
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.file-input:hover {
+  cursor: pointer;
 }
 
 div button:first-child {

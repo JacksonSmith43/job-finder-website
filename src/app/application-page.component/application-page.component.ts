@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
+import { Component, HostListener, inject, Input, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -12,7 +12,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DatePickerModule } from 'primeng/datepicker';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { MatButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { finalize, Subscription } from 'rxjs';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { JobService } from '../shared/services/job.service';
@@ -30,7 +34,9 @@ import { JobType } from '../shared/model/job-type.model';
     MatInputModule,
     MatStepperModule,
     ReactiveFormsModule,
-    MatButton,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressBarModule,
   ],
   templateUrl: './application-page.component.html',
   styleUrl: './application-page.component.css',
@@ -47,6 +53,14 @@ export class ApplicationPageComponent implements OnInit {
   currentJob = this.jobService.currentJob;
 
   srAnnouncement = '';
+
+  @Input() requiredFileType: string = '';
+
+  fileName = '';
+  uploadProgress: number | null = 0;
+  uploadSub: Subscription | null = new Subscription();
+
+  constructor(private http: HttpClient) {}
 
   employment = {
     status: '',
@@ -251,5 +265,41 @@ export class ApplicationPageComponent implements OnInit {
   formGroupErrorLength(formGroup: FormGroup): number {
     // Object.values() takes an object and returns an array of its values. Here, it is used to get an array of all form controls in the form group.
     return Object.values(formGroup.controls).filter((control) => control.invalid).length;
+  }
+
+  onFileSelected(event: Event) {
+    const file: File = (event.target as HTMLInputElement).files![0];
+
+    if (file) {
+      this.fileName = file.name;
+      const formData = new FormData();
+      formData.append('thumbnail', file);
+
+      const upload$ = this.http
+        .post('/api/thumbnail-upload', formData, {
+          reportProgress: true,
+          observe: 'events',
+        })
+        // finalize() helps to perform some action when the observable completes, regardless of whether it was successful or not.
+        .pipe(finalize(() => this.reset()));
+
+      this.uploadSub = upload$.subscribe((event) => {
+        if (event.type == HttpEventType.UploadProgress) {
+          if (event.total) {
+            this.uploadProgress = Math.round(100 * (event.loaded / event.total));
+          }
+        }
+      });
+    }
+  }
+
+  cancelUpload() {
+    this.uploadSub?.unsubscribe();
+    this.reset();
+  }
+
+  reset() {
+    this.uploadProgress = null;
+    this.uploadSub = null;
   }
 }
