@@ -44,6 +44,8 @@ export class ApplicationPageComponent implements OnInit {
 
   currentJob = this.jobService.currentJob;
 
+  srAnnouncement = '';
+
   employment = {
     status: '',
     common: {
@@ -75,12 +77,12 @@ export class ApplicationPageComponent implements OnInit {
 
   personalProfileFormGroup = this._formBuilder.group({
     // Ctrl stands for Control.
-    fullNameCtrl: ['', Validators.required],
+    fullNameCtrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
     genderCtrl: ['', Validators.required],
     birthdateCtrl: ['', Validators.required],
-    phoneNumberCtrl: ['', Validators.required],
-    emailCtrl: ['', Validators.required],
-    addressCtrl: ['', Validators.required],
+    phoneNumberCtrl: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+    emailCtrl: ['', [Validators.required, Validators.email]],
+    addressCtrl: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
   });
 
   educationFormGroup = this._formBuilder.group({
@@ -139,6 +141,17 @@ export class ApplicationPageComponent implements OnInit {
     console.log('onStepper()_currentForm: ', currentForm);
 
     currentForm.markAllAsTouched();
+
+    console.log('onStepper()_currentForm: ', currentForm);
+
+    let invalidErrorLength = this.formGroupErrorLength(currentForm);
+    console.log('onStepper()_invalidErrorLength: ', invalidErrorLength);
+
+    if (invalidErrorLength > 0) {
+      this.srAnnouncement = `There are ${invalidErrorLength} validation errors.`;
+    } else {
+      this.srAnnouncement = '';
+    }
 
     if (currentForm.invalid) {
       return;
@@ -219,5 +232,10 @@ export class ApplicationPageComponent implements OnInit {
 
     const control = formGroup.get(controlName);
     return control && control.invalid && control.touched ? 'field-error' : '';
+  }
+
+  formGroupErrorLength(formGroup: FormGroup): number {
+    // Object.values() takes an object and returns an array of its values. Here, it is used to get an array of all form controls in the form group.
+    return Object.values(formGroup.controls).filter((control) => control.invalid).length;
   }
 }

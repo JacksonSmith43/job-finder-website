@@ -11,9 +11,14 @@
                     <mat-form-field>
                         <mat-label for="full-name" [class]="hasFieldError(personalProfileFormGroup, 'fullNameCtrl')">Full
                             Name:</mat-label>
-                        <input id="full-name" matInput placeholder="Morpheus Endless" formControlName="fullNameCtrl">
+                        <input id="full-name" matInput placeholder="Example:Morpheus Endless" formControlName="fullNameCtrl"
+                            aria-describedby="full-name-error">
                     </mat-form-field>
-
+                    @if (personalProfileFormGroup.controls.fullNameCtrl.invalid &&
+                    personalProfileFormGroup.controls.fullNameCtrl.touched) {
+                    <mat-error id="full-name-error" class="full-name-error field-error">Full name is required and must be between 2 and 50
+                        characters.</mat-error>
+                    }
                     <mat-form-field>
                         <mat-label [class]="hasFieldError(personalProfileFormGroup, 'birthdateCtrl')">Choose your birthdate</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="birthdateCtrl" (focus)="picker.open()"
@@ -23,10 +28,10 @@
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
 
-                    <label for="gender">Gender:</label>
+                    <p id="gender-label">Gender:</p>
                     <div class="radio-field"
                         [class.radio-field-invalid]="personalProfileFormGroup.controls.genderCtrl.invalid && personalProfileFormGroup.controls.genderCtrl.touched">
-                        <mat-radio-group aria-label="Select an option for your gender" formControlName="genderCtrl">
+                        <mat-radio-group aria-labelledby="gender-label" aria-describedby="gender-error" formControlName="genderCtrl">
                             <mat-radio-button value="male">Male</mat-radio-button>
                             <mat-radio-button value="female">Female</mat-radio-button>
                             <mat-radio-button value="rather-not-say">Rather not say</mat-radio-button>
@@ -34,28 +39,45 @@
                     </div>
                     @if (personalProfileFormGroup.controls.genderCtrl.invalid &&
                     personalProfileFormGroup.controls.genderCtrl.touched) {
-                    <mat-error class="field-error">Gender orientation is required.</mat-error>
+                    <mat-error id="gender-error" class="field-error" aria-live="polite">Gender orientation is required.</mat-error>
                     }
 
                     <mat-form-field>
                         <mat-label for="phone-number" [class]="hasFieldError(personalProfileFormGroup, 'phoneNumberCtrl')">Phone
                             number:</mat-label>
-                        <input id="phone-number" type="tel" matInput placeholder="012345678" formControlName="phoneNumberCtrl">
+                        <input id="phone-number" type="tel" matInput placeholder="Example: 012345678" formControlName="phoneNumberCtrl"
+                            aria-describedby="phone-number-error">
                     </mat-form-field>
+                    @if (personalProfileFormGroup.controls.phoneNumberCtrl.invalid &&
+                    personalProfileFormGroup.controls.phoneNumberCtrl.touched) {
+                    <mat-error id="phone-number-error" class="field-error">Phone number is required and must be valid.</mat-error>
+                    }
 
                     <mat-form-field>
                         <mat-label for="email" [class]="hasFieldError(personalProfileFormGroup, 'emailCtrl')">Email:</mat-label>
-                        <input id="email" type="email" matInput placeholder="morpheus@gmx.at" formControlName="emailCtrl">
+                        <input id="email" type="email" matInput placeholder="Example: morpheus@gmx.at" formControlName="emailCtrl"
+                            aria-describedby="email-error">
                     </mat-form-field>
+                    @if (personalProfileFormGroup.controls.emailCtrl.invalid &&
+                    personalProfileFormGroup.controls.emailCtrl.touched) {
+                    <mat-error id="email-error" class="field-error">Email is required and must be valid.</mat-error>
+                    }
 
                     <mat-form-field>
                         <mat-label for="address" [class]="hasFieldError(personalProfileFormGroup, 'addressCtrl')">Address:</mat-label>
-                        <input id="address" type="text" matInput placeholder="Unknownstreet 5" formControlName="addressCtrl">
+                        <input id="address" type="text" matInput placeholder="Example: Unknownstreet 5" formControlName="addressCtrl"
+                            aria-describedby="address-error">
                     </mat-form-field>
+                    @if (personalProfileFormGroup.controls.addressCtrl.invalid &&
+                    personalProfileFormGroup.controls.addressCtrl.touched) {
+                    <mat-error id="address-error" class="field-error" aria-live="polite">Address is required and must be between 5 and 100
+                        characters.</mat-error>
+                    }
+
+                    <div class="field-error sr-announcement" aria-live="polite" aria-atomic="true">{{ srAnnouncement }}</div>
 
                     <div>
-                        <button matButton="outlined" type="button" (click)="onNextStep(stepper, personalProfileFormGroup)"
-                            title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
+                        <button matButton="outlined" type="button" (click)="onNextStep(stepper, personalProfileFormGroup)">Next</button>
                     </div>
                 </form>
             </mat-step>
@@ -104,9 +126,10 @@
                         </div>
                     </div>
 
+                    <div class="field-error sr-announcement" aria-live="polite" aria-atomic="true">{{ srAnnouncement }}</div>
+
                     <div>
-                        <button matButton="outlined" type="button" (click)="onNextStep(stepper, educationFormGroup)"
-                            title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
+                        <button matButton="outlined" type="button" (click)="onNextStep(stepper, educationFormGroup)">Next</button>
                         <button matButton="outlined" matStepperPrevious type="button">Back</button>
                     </div>
                 </form>
@@ -115,10 +138,11 @@
                 <form [formGroup]="jobFormGroup">
                     <ng-template matStepLabel>Job profile information</ng-template>
 
-                    <mat-label>What is your current employment status:</mat-label>
-                    <div class="radio-field"
+                    <p id="employment-status-label">What is your current employment status:</p>
+                    <div class="radio-field" id="employmentStatus"
                         [class.radio-field-invalid]="jobFormGroup.controls.employmentStatusCtrl.invalid && jobFormGroup.controls.employmentStatusCtrl.touched">
-                        <mat-radio-group aria-label="Select an option" formControlName="employmentStatusCtrl">
+                        <mat-radio-group aria-labelledby="employment-status-label" aria-describedby="employment-status-error"
+                            formControlName="employmentStatusCtrl">
                             <mat-radio-button value="student">Student</mat-radio-button>
                             <mat-radio-button value="employed">Employed</mat-radio-button>
                             <mat-radio-button value="selfEmployed">Self-Employed</mat-radio-button>
@@ -129,20 +153,21 @@
 
                     @if (jobFormGroup.controls.employmentStatusCtrl.invalid &&
                     jobFormGroup.controls.employmentStatusCtrl.touched) {
-                    <mat-error class="field-error">Employment status is required.</mat-error>
+                    <mat-error id="employment-status-error" class="field-error" aria-live="polite">Employment status is
+                        required.</mat-error>
                     }
 
                     @if(jobFormGroup.controls.employmentStatusCtrl.value === "student"){
                     <mat-form-field>
                         <mat-label for="name-of-study" [class]="hasFieldError(jobFormGroup, 'nameOfStudyCtrl')">Name of study</mat-label>
-                        <input id="name-of-study" type="text" matInput placeholder="Smart Homes And Assistive Technologies"
+                        <input id="name-of-study" type="text" matInput placeholder="Example Smart Homes And Assistive Technologies"
                             formControlName="nameOfStudyCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label for="current-semester" [class]="hasFieldError(jobFormGroup, 'currentSemesterCtrl')">Current
                             Semester</mat-label>
-                        <input id="current-semester" type="number" matInput placeholder="6" formControlName="currentSemesterCtrl">
+                        <input id="current-semester" type="number" matInput placeholder="Example 6" formControlName="currentSemesterCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
@@ -159,12 +184,13 @@
                     @if(jobFormGroup.controls.employmentStatusCtrl.value === "employed"){
                     <mat-form-field>
                         <mat-label for="company-name" [class]="hasFieldError(jobFormGroup, 'companyNameCtrl')">Company Name</mat-label>
-                        <input id="company-name" type="text" matInput placeholder="Dodgycompany" formControlName="companyNameCtrl">
+                        <input id="company-name" type="text" matInput placeholder="Example Dodgycompany" formControlName="companyNameCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
                         <mat-label for="position-held" [class]="hasFieldError(jobFormGroup, 'positionHeldCtrl')">Position Held</mat-label>
-                        <input id="position-held" type="text" matInput placeholder="Pretentious level" formControlName="positionHeldCtrl">
+                        <input id="position-held" type="text" matInput placeholder="Example Pretentious level"
+                            formControlName="positionHeldCtrl">
                     </mat-form-field>
 
                     <mat-form-field>
@@ -186,13 +212,14 @@
                     @if(jobFormGroup.controls.employmentStatusCtrl.value === "selfEmployed"){
                     <mat-form-field>
                         <mat-label for="project-type" [class]="hasFieldError(jobFormGroup, 'projectTypeCtrl')">Project Type</mat-label>
-                        <input id="project-type" type="text" matInput placeholder="Software Development" formControlName="projectTypeCtrl">
+                        <input id="project-type" type="text" matInput placeholder="Example Software Development"
+                            formControlName="projectTypeCtrl">
                     </mat-form-field>
 
-                    <mat-label>Available for long term projects</mat-label>
+                    <p id="long-term-project-label">Available for long term projects</p>
                     <div class="radio-field"
                         [class.radio-field-invalid]="jobFormGroup.controls.longTermProjectCtrl.invalid && jobFormGroup.controls.longTermProjectCtrl.touched">
-                        <mat-radio-group aria-label="Select an option" formControlName="longTermProjectCtrl">
+                        <mat-radio-group aria-labelledby="long-term-project-label" formControlName="longTermProjectCtrl">
                             <mat-radio-button value="yes">Yes</mat-radio-button>
                             <mat-radio-button value="no">No</mat-radio-button>
                         </mat-radio-group>
@@ -202,14 +229,15 @@
                     @if(jobFormGroup.controls.employmentStatusCtrl.value === "unemployed"){
                     <mat-form-field>
                         <mat-label for="recent-role" [class]="hasFieldError(jobFormGroup, 'recentRoleCtrl')">Recent Role</mat-label>
-                        <input id="recent-role" type="text" matInput placeholder="Frontend Engineer" formControlName="recentRoleCtrl">
+                        <input id="recent-role" type="text" matInput placeholder="Example Frontend Engineer"
+                            formControlName="recentRoleCtrl">
                     </mat-form-field>
                     }
 
                     @if(jobFormGroup.controls.employmentStatusCtrl.value === "notCurrentlyListed"){
                     <mat-form-field>
                         <mat-label for="other-role" [class]="hasFieldError(jobFormGroup, 'otherRoleCtrl')">Other Role</mat-label>
-                        <input id="other-role" type="text" matInput placeholder="Freelancer" formControlName="otherRoleCtrl">
+                        <input id="other-role" type="text" matInput placeholder="Example Freelancer" formControlName="otherRoleCtrl">
                     </mat-form-field>
                     }
 
@@ -236,9 +264,11 @@
                     </mat-form-field>
 
                 </form>
+
+                <div class="field-error sr-announcement" aria-live="polite" aria-atomic="true">{{ srAnnouncement }}</div>
+
                 <div>
-                    <button matButton="outlined" type="button" (click)="onNextStep(stepper, jobFormGroup)"
-                        title="All required fields have to be corectly filled out in order for you to continue.">Next</button>
+                    <button matButton="outlined" type="button" (click)="onNextStep(stepper, jobFormGroup)">Next</button>
                     <button matButton="outlined" matStepperPrevious type="button">Back</button>
                 </div>
             </mat-step>
