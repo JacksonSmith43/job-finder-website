@@ -7,6 +7,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { YourJobsComponent } from './your-jobs/your-jobs.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { ApplicationPageComponent } from './application-page.component/application-page.component';
 
 export const routes: Routes = [
   { path: '', component: SearchJobComponent },
@@ -19,4 +20,6 @@ export const routes: Routes = [
 
   { path: 'jobDetails/:id', component: JobDetailsComponent },
   { path: 'homepage/jobDetails/:id', component: JobDetailsComponent },
+
+  { path: 'application-page/:id', component: ApplicationPageComponent },
 ];

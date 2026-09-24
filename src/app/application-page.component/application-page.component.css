@@ -1,0 +1,125 @@
+:host {
+  font-family: sans-serif;
+}
+
+mat-icon {
+  font-family: 'Material Icons';
+}
+
+h1 {
+  text-align: center;
+}
+
+h4 {
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  display: grid;
+}
+
+mat-form-field {
+  margin-top: 2rem;
+}
+
+button {
+  float: right;
+}
+
+label {
+  margin-top: 2rem;
+}
+
+option {
+  background-color: black;
+}
+
+.field-error {
+  color: rgb(168, 1, 1);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-announcement {
+  display: flex;
+  justify-content: center;
+}
+
+mat-label {
+  color: white;
+}
+
+.radio-field {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 0.1rem solid transparent;
+  border-radius: 0.4rem;
+}
+
+.file-upload-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  outline: 0.25rem dotted blue;
+
+  width: 50%;
+  margin: 0rem auto;
+  padding: 1rem 1rem;
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.file-input:hover {
+  cursor: pointer;
+}
+
+.cancel-upload {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+div button:first-child {
+  margin-left: 1rem;
+}
+
+button:focus,
+.radio-field:focus-within {
+  outline: 0.25rem solid red;
+}
+
+/* Smartphones (from 576px). */
+@media only screen and (max-width: 576px) {
+  .file-upload-container {
+    width: 100%;
+  }
+
+  div button {
+    margin-top: 1rem;
+  }
+}
+
+/* Tablets & larger Smartphones (from 576px). */
+@media only screen and (max-width: 768px) and (min-width: 576px) {
+  div button {
+    margin-top: 1rem;
+  }
+}

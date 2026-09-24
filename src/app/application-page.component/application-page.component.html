@@ -1,0 +1,320 @@
+<main>
+    <h1>Job Application for {{currentJob().name}}</h1>
+
+    <div class="progress-bar">
+
+        <mat-stepper [linear]="isLinear()" [orientation]="stepperOrientation()" #stepper>
+            <mat-step class="personal-information" [stepControl]="personalProfileFormGroup">
+                <form [formGroup]="personalProfileFormGroup">
+                    <ng-template matStepLabel>Personal details</ng-template>
+
+                    <mat-form-field>
+                        <mat-label for="full-name" [class]="hasFieldError(personalProfileFormGroup, 'fullNameCtrl')">Full
+                            Name:</mat-label>
+                        <input id="full-name" matInput placeholder="Example:Morpheus Endless" formControlName="fullNameCtrl"
+                            aria-describedby="full-name-error">
+                    </mat-form-field>
+                    @if (personalProfileFormGroup.controls.fullNameCtrl.invalid &&
+                    personalProfileFormGroup.controls.fullNameCtrl.touched) {
+                    <mat-error id="full-name-error" class="full-name-error field-error">Full name is required and must be between 2 and 50
+                        characters.</mat-error>
+                    }
+                    <mat-form-field>
+                        <mat-label [class]="hasFieldError(personalProfileFormGroup, 'birthdateCtrl')">Choose your birthdate</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="birthdateCtrl" (focus)="picker.open()"
+                            (click)="picker.open()">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <p id="gender-label">Gender:</p>
+                    <div class="radio-field"
+                        [class.radio-field-invalid]="personalProfileFormGroup.controls.genderCtrl.invalid && personalProfileFormGroup.controls.genderCtrl.touched">
+                        <mat-radio-group aria-labelledby="gender-label" aria-describedby="gender-error" formControlName="genderCtrl">
+                            <mat-radio-button value="male">Male</mat-radio-button>
+                            <mat-radio-button value="female">Female</mat-radio-button>
+                            <mat-radio-button value="rather-not-say">Rather not say</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    @if (personalProfileFormGroup.controls.genderCtrl.invalid &&
+                    personalProfileFormGroup.controls.genderCtrl.touched) {
+                    <mat-error id="gender-error" class="field-error" aria-live="polite">Gender orientation is required.</mat-error>
+                    }
+
+                    <mat-form-field>
+                        <mat-label for="phone-number" [class]="hasFieldError(personalProfileFormGroup, 'phoneNumberCtrl')">Phone
+                            number:</mat-label>
+                        <input id="phone-number" type="tel" matInput placeholder="Example: 012345678" formControlName="phoneNumberCtrl"
+                            aria-describedby="phone-number-error">
+                    </mat-form-field>
+                    @if (personalProfileFormGroup.controls.phoneNumberCtrl.invalid &&
+                    personalProfileFormGroup.controls.phoneNumberCtrl.touched) {
+                    <mat-error id="phone-number-error" class="field-error">Phone number is required and must be valid.</mat-error>
+                    }
+
+                    <mat-form-field>
+                        <mat-label for="email" [class]="hasFieldError(personalProfileFormGroup, 'emailCtrl')">Email:</mat-label>
+                        <input id="email" type="email" matInput placeholder="Example: morpheus@gmx.at" formControlName="emailCtrl"
+                            aria-describedby="email-error">
+                    </mat-form-field>
+                    @if (personalProfileFormGroup.controls.emailCtrl.invalid &&
+                    personalProfileFormGroup.controls.emailCtrl.touched) {
+                    <mat-error id="email-error" class="field-error">Email is required and must be valid.</mat-error>
+                    }
+
+                    <mat-form-field>
+                        <mat-label for="address" [class]="hasFieldError(personalProfileFormGroup, 'addressCtrl')">Address:</mat-label>
+                        <input id="address" type="text" matInput placeholder="Example: Unknownstreet 5" formControlName="addressCtrl"
+                            aria-describedby="address-error">
+                    </mat-form-field>
+                    @if (personalProfileFormGroup.controls.addressCtrl.invalid &&
+                    personalProfileFormGroup.controls.addressCtrl.touched) {
+                    <mat-error id="address-error" class="field-error" aria-live="polite">Address is required and must be between 5 and 100
+                        characters.</mat-error>
+                    }
+
+                    <div class="field-error sr-announcement" aria-live="polite" aria-atomic="true">{{ srAnnouncement }}</div>
+
+                    <div>
+                        <button matButton="outlined" type="button" (click)="onNextStep(stepper, personalProfileFormGroup)">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step class="education-history" [stepControl]="educationFormGroup" label="Educational background">
+                <form [formGroup]="educationFormGroup">
+
+                    <mat-form-field class="highest-degree">
+                        <mat-label [class]="hasFieldError(educationFormGroup, 'highestDegreeCtrl')">Highest degree:</mat-label>
+                        <select matNativeControl formControlName="highestDegreeCtrl">
+                            <option value="high-school-diploma">High School Diploma</option>
+                            <option value="some-college">Some College</option>
+                            <option value="associate-degree">Associate Degree</option>
+                            <option value="bachelor-degree">Bachelor's Degree</option>
+                            <option value="master-degree">Master's Degree</option>
+                            <option value="doctoral-degree">Doctoral Degree</option>
+                            <option value="professional-degree">Professional Degree</option>
+                            <option value="none-of-the-above">None of the above</option>
+                        </select>
+                    </mat-form-field>
+
+
+                    <mat-form-field class="school-institution">
+                        <mat-label [class]="hasFieldError(educationFormGroup, 'schoolInstitutionCtrl')">School/Institution:</mat-label>
+                        <select matNativeControl formControlName="schoolInstitutionCtrl">
+                            <option value="technikum-wien">Technikum Wien</option>
+                            <option value="hochschule-campus-wien">Hochschule Campus Wien</option>
+                            <option value="technische-universität-wien">Technische Universität Wien</option>
+                            <option value="medizinische-universität-wien">Medizinische Universität Wien</option>
+                            <option value="University-vienna">University Vienna</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </mat-form-field>
+
+
+                    <div class="p-fluid p-grid p-formgrid">
+                        <label for="completion-date">Completion
+                            date:</label>
+                        <div class="p-field p-col-12 p-md-4">
+                            <p-datepicker id="completion-date" inputId="completion-date" view="year" dateFormat="yy"
+                                placeholder="Pick a year" formControlName="yearCompletedCtrl" [readonlyInput]="false" [showOnFocus]="true">
+                            </p-datepicker>
+                            @if (educationFormGroup.controls.yearCompletedCtrl.invalid &&
+                            educationFormGroup.controls.yearCompletedCtrl.touched) {
+                            <mat-error class="field-error">Completion year is required.</mat-error>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="field-error sr-announcement" aria-live="polite" aria-atomic="true">{{ srAnnouncement }}</div>
+
+                    <div>
+                        <button matButton="outlined" type="button" (click)="onNextStep(stepper, educationFormGroup)">Next</button>
+                        <button matButton="outlined" matStepperPrevious type="button">Back</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step class="employment-history" [stepControl]="jobFormGroup">
+                <form [formGroup]="jobFormGroup">
+                    <ng-template matStepLabel>Job profile information</ng-template>
+
+                    <p id="employment-status-label">What is your current employment status:</p>
+                    <div class="radio-field" id="employmentStatus"
+                        [class.radio-field-invalid]="jobFormGroup.controls.employmentStatusCtrl.invalid && jobFormGroup.controls.employmentStatusCtrl.touched">
+                        <mat-radio-group aria-labelledby="employment-status-label" aria-describedby="employment-status-error"
+                            formControlName="employmentStatusCtrl">
+                            <mat-radio-button value="student">Student</mat-radio-button>
+                            <mat-radio-button value="employed">Employed</mat-radio-button>
+                            <mat-radio-button value="selfEmployed">Self-Employed</mat-radio-button>
+                            <mat-radio-button value="unemployed">Unemployed</mat-radio-button>
+                            <mat-radio-button value="notCurrentlyListed">Not Currently Listed</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    @if (jobFormGroup.controls.employmentStatusCtrl.invalid &&
+                    jobFormGroup.controls.employmentStatusCtrl.touched) {
+                    <mat-error id="employment-status-error" class="field-error" aria-live="polite">Employment status is
+                        required.</mat-error>
+                    }
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "student"){
+                    <mat-form-field>
+                        <mat-label for="name-of-study" [class]="hasFieldError(jobFormGroup, 'nameOfStudyCtrl')">Name of study</mat-label>
+                        <input id="name-of-study" type="text" matInput placeholder="Example Smart Homes And Assistive Technologies"
+                            formControlName="nameOfStudyCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label for="current-semester" [class]="hasFieldError(jobFormGroup, 'currentSemesterCtrl')">Current
+                            Semester</mat-label>
+                        <input id="current-semester" type="number" matInput placeholder="Example 6" formControlName="currentSemesterCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'graduationDateCtrl')">Graduation date</mat-label>
+                        <input matInput [matDatepicker]="graduationPicker" formControlName="graduationDateCtrl"
+                            (focus)="graduationPicker.open()" (click)="graduationPicker.open()">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="graduationPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #graduationPicker></mat-datepicker>
+                    </mat-form-field>
+                    }
+
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "employed"){
+                    <mat-form-field>
+                        <mat-label for="company-name" [class]="hasFieldError(jobFormGroup, 'companyNameCtrl')">Company Name</mat-label>
+                        <input id="company-name" type="text" matInput placeholder="Example Dodgycompany" formControlName="companyNameCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label for="position-held" [class]="hasFieldError(jobFormGroup, 'positionHeldCtrl')">Position Held</mat-label>
+                        <input id="position-held" type="text" matInput placeholder="Example Pretentious level"
+                            formControlName="positionHeldCtrl">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label
+                            [class]="hasFieldError(jobFormGroup, 'startEmploymentDateCtrl') || hasFieldError(jobFormGroup, 'endEmploymentDateCtrl')">Employment
+                            dates</mat-label>
+                        <mat-date-range-input [rangePicker]="datePicker">
+                            <input matStartDate placeholder="Start date" formControlName="startEmploymentDateCtrl"
+                                (focus)="datePicker.open()" (click)="datePicker.open()">
+                            <input matEndDate placeholder="End date" formControlName="endEmploymentDateCtrl" (focus)="datePicker.open()"
+                                (click)="datePicker.open()">
+                        </mat-date-range-input>
+                        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #datePicker></mat-date-range-picker>
+                    </mat-form-field>
+                    }
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "selfEmployed"){
+                    <mat-form-field>
+                        <mat-label for="project-type" [class]="hasFieldError(jobFormGroup, 'projectTypeCtrl')">Project Type</mat-label>
+                        <input id="project-type" type="text" matInput placeholder="Example Software Development"
+                            formControlName="projectTypeCtrl">
+                    </mat-form-field>
+
+                    <p id="long-term-project-label">Available for long term projects</p>
+                    <div class="radio-field"
+                        [class.radio-field-invalid]="jobFormGroup.controls.longTermProjectCtrl.invalid && jobFormGroup.controls.longTermProjectCtrl.touched">
+                        <mat-radio-group aria-labelledby="long-term-project-label" formControlName="longTermProjectCtrl">
+                            <mat-radio-button value="yes">Yes</mat-radio-button>
+                            <mat-radio-button value="no">No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    }
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "unemployed"){
+                    <mat-form-field>
+                        <mat-label for="recent-role" [class]="hasFieldError(jobFormGroup, 'recentRoleCtrl')">Recent Role</mat-label>
+                        <input id="recent-role" type="text" matInput placeholder="Example Frontend Engineer"
+                            formControlName="recentRoleCtrl">
+                    </mat-form-field>
+                    }
+
+                    @if(jobFormGroup.controls.employmentStatusCtrl.value === "notCurrentlyListed"){
+                    <mat-form-field>
+                        <mat-label for="other-role" [class]="hasFieldError(jobFormGroup, 'otherRoleCtrl')">Other Role</mat-label>
+                        <input id="other-role" type="text" matInput placeholder="Example Freelancer" formControlName="otherRoleCtrl">
+                    </mat-form-field>
+                    }
+
+                    <mat-form-field>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'availableStartDateCtrl')">Choose your available
+                            startdate</mat-label>
+                        <input matInput [matDatepicker]="startPicker" formControlName="availableStartDateCtrl" (focus)="startPicker.open()"
+                            (click)="startPicker.open()">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label [class]="hasFieldError(jobFormGroup, 'experienceCtrl')">Years experience in the field that you are
+                            applying to</mat-label>
+                        <select matNativeControl formControlName="experienceCtrl">
+                            <option value="zero-years">0 years.</option>
+                            <option value="one-to-two-years">1-2 years.</option>
+                            <option value="three-to-five-years">3-5 years.</option>
+                            <option value="five-to-fifteen-years">5-15 years.</option>
+                            <option value="fifteen-plus-years">15+ years.</option>
+                        </select>
+                    </mat-form-field>
+
+                </form>
+
+                <div class="field-error sr-announcement" aria-live="polite" aria-atomic="true">{{ srAnnouncement }}</div>
+
+                <div>
+                    <button matButton="outlined" type="button" (click)="onNextStep(stepper, jobFormGroup)">Next</button>
+                    <button matButton="outlined" matStepperPrevious type="button">Back</button>
+                </div>
+            </mat-step>
+
+            <mat-step class="documents" [stepControl]="documentsFormGroup">
+                <form [formGroup]="documentsFormGroup">
+                    <ng-template matStepLabel>Documents</ng-template>
+
+                    <h4 id="documents-heading">Upload documents</h4>
+                    <p id="documents-help" class="sr-only">Upload your CV in the accepted file format.</p>
+                    <div class="file-upload-container">
+                        <label for="cv-upload" class="sr-only">Choose CV file</label>
+                        <input id="cv-upload" type="file" class="file-input" [accept]="requiredFileType" (change)="onFileSelected($event)"
+                            #fileUpload aria-describedby="documents-help upload-status">
+
+                        <div class="file-upload">
+                            <p id="upload-status" role="status" aria-live="polite" aria-atomic="true">{{ fileName || "No file uploaded yet."
+                                }}</p>
+                            <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()"
+                                aria-label="Choose file to upload" aria-controls="cv-upload" aria-describedby="documents-help">
+                                <mat-icon>attach_file</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="progress">
+
+                            <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress"
+                                aria-label="File upload progress">
+                            </mat-progress-bar>
+
+                            <button type="button" class="cancel-upload" (click)="cancelUpload()" *ngIf="uploadProgress"
+                                aria-label="Cancel file upload">
+                                <mat-icon>delete_forever</mat-icon>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="sr-only" aria-live="polite" aria-atomic="true">{{ uploadStatusMessage }}</div>
+
+                    <div>
+                        <button type="button" matButton="outlined" (click)="stepper.reset()">Reset</button>
+                        <button matButton="outlined" matStepperPrevious type="button">Back</button>
+                    </div>
+                </form>
+            </mat-step>
+        </mat-stepper>
+    </div>
+</main>
