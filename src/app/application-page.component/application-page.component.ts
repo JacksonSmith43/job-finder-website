@@ -61,6 +61,7 @@ export class ApplicationPageComponent implements OnInit {
   fileName = '';
   uploadProgress: number | null = 0;
   uploadSub: Subscription | null = new Subscription();
+  uploadStatusMessage = '';
 
   constructor(private http: HttpClient) {}
 
@@ -270,33 +271,48 @@ export class ApplicationPageComponent implements OnInit {
   }
 
   onFileSelected(event: Event) {
-    const file: File = (event.target as HTMLInputElement).files![0];
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
 
-    if (file) {
-      this.fileName = file.name;
-      const formData = new FormData();
-      formData.append('thumbnail', file);
+    if (!file) {
+      this.documentsFormGroup.get('cv')?.setValue('');
+      this.uploadStatusMessage = 'No file selected.';
+      return;
+    }
 
-      const upload$ = this.http
-        .post('/api/thumbnail-upload', formData, {
-          reportProgress: true,
-          observe: 'events',
-        })
-        // finalize() helps to perform some action when the observable completes, regardless of whether it was successful or not.
-        .pipe(finalize(() => this.reset()));
+    this.fileName = file.name;
+    this.uploadStatusMessage = `${file.name} selected.`;
+    this.documentsFormGroup.get('cv')?.setValue(file.name);
+    this.documentsFormGroup.get('cv')?.markAsDirty();
+    this.documentsFormGroup.get('cv')?.markAsTouched();
 
-      this.uploadSub = upload$.subscribe((event) => {
-        if (event.type == HttpEventType.UploadProgress) {
-          if (event.total) {
-            this.uploadProgress = Math.round(100 * (event.loaded / event.total));
+    const formData = new FormData();
+    formData.append('thumbnail', file);
+
+    const upload$ = this.http
+      .post('/api/thumbnail-upload', formData, {
+        reportProgress: true,
+        observe: 'events',
+      })
+      // finalize() helps to perform some action when the observable completes, regardless of whether it was successful or not.
+      .pipe(finalize(() => this.reset()));
+
+    this.uploadSub = upload$.subscribe((httpEvent) => {
+      if (httpEvent.type === HttpEventType.UploadProgress) {
+        if (httpEvent.total) {
+          this.uploadProgress = Math.round((100 * httpEvent.loaded) / httpEvent.total);
+
+          if (this.uploadProgress === 100) {
+            this.uploadStatusMessage = `${this.fileName} uploaded successfully.`;
           }
         }
-      });
-    }
+      }
+    });
   }
 
   cancelUpload() {
     this.uploadSub?.unsubscribe();
+    this.uploadStatusMessage = 'Upload cancelled.';
     this.reset();
   }
 

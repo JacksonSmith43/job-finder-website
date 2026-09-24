@@ -277,29 +277,40 @@
                 <form [formGroup]="documentsFormGroup">
                     <ng-template matStepLabel>Documents</ng-template>
 
-                    <h4>Upload documents</h4>
+                    <h4 id="documents-heading">Upload documents</h4>
+                    <p id="documents-help" class="sr-only">Upload your CV in the accepted file format.</p>
                     <div class="file-upload-container">
-                        <input type="file" class="file-input" [accept]="requiredFileType" (change)="onFileSelected($event)" #fileUpload>
+                        <label for="cv-upload" class="sr-only">Choose CV file</label>
+                        <input id="cv-upload" type="file" class="file-input" [accept]="requiredFileType" (change)="onFileSelected($event)"
+                            #fileUpload aria-describedby="documents-help upload-status">
 
                         <div class="file-upload">
-                            <p>{{fileName || "No file uploaded yet."}}</p>
-                            <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                            <p id="upload-status" role="status" aria-live="polite" aria-atomic="true">{{ fileName || "No file uploaded yet."
+                                }}</p>
+                            <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()"
+                                aria-label="Choose file to upload" aria-controls="cv-upload" aria-describedby="documents-help">
                                 <mat-icon>attach_file</mat-icon>
                             </button>
                         </div>
 
                         <div class="progress">
 
-                            <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress">
+                            <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress"
+                                aria-label="File upload progress">
                             </mat-progress-bar>
 
-                            <mat-icon class="cancel-upload" (click)="cancelUpload()" *ngIf="uploadProgress">delete_forever</mat-icon>
+                            <button type="button" class="cancel-upload" (click)="cancelUpload()" *ngIf="uploadProgress"
+                                aria-label="Cancel file upload">
+                                <mat-icon>delete_forever</mat-icon>
+                            </button>
 
                         </div>
                     </div>
 
+                    <div class="sr-only" aria-live="polite" aria-atomic="true">{{ uploadStatusMessage }}</div>
+
                     <div>
-                        <button matButton="outlined" (click)="stepper.reset()">Reset</button>
+                        <button type="button" matButton="outlined" (click)="stepper.reset()">Reset</button>
                         <button matButton="outlined" matStepperPrevious type="button">Back</button>
                     </div>
                 </form>
