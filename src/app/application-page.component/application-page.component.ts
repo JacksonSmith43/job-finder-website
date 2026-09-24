@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { finalize, Subscription } from 'rxjs';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
 
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { JobService } from '../shared/services/job.service';
@@ -37,6 +38,7 @@ import { JobType } from '../shared/model/job-type.model';
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
+    CommonModule,
   ],
   templateUrl: './application-page.component.html',
   styleUrl: './application-page.component.css',
